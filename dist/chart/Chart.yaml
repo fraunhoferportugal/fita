@@ -1,0 +1,15 @@
+name: fita
+version: 0.0.1
+apiVersion: v2
+description: a Helm chart to manage constrained IoT devices using Kubernetes and NextGenGW
+dependencies:
+  - name: far-edge-node-watcher
+    version: 0.0.1
+    repository: "file://../../components/far-edge-node-watcher/dist/chart"
+  - name: far-edge-connection-provisioner
+    version: 0.0.1
+    repository: "file://../../components/far-edge-connection-provisioner/dist/chart"
+  - name: nextgengw
+    version: 0.0.1
+    repository: "file://../../../nextgengw/dist/chart"
+  

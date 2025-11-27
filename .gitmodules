@@ -1,0 +1,9 @@
+[submodule "components/far-edge-connection-provisioner"]
+	path = components/far-edge-connection-provisioner
+	url = ssh://git@git.fraunhofer.pt/mlsysops/far-edge-connection-provisioner.git
+[submodule "components/far-edge-kubelet"]
+	path = components/far-edge-kubelet
+	url = ssh://git@git.fraunhofer.pt/mlsysops/far-edge-kubelet.git
+[submodule "components/far-edge-node-watcher"]
+	path = components/far-edge-node-watcher
+	url = ssh://git@git.fraunhofer.pt/mlsysops/far-edge-node-watcher.git

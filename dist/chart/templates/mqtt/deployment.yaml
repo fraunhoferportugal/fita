@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mqtt-broker
+  labels:
+    app: {{ template "fita.fullname" . }}-mqtt-broker
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ template "fita.fullname" . }}-mqtt-broker
+  template:
+    metadata:
+      labels:
+        app: {{ template "fita.fullname" . }}-mqtt-broker
+    spec:
+      containers:
+        - name: broker
+          image: {{ .Values.mqttBroker.image.repository }}:{{ coalesce .Values.mqttBroker.image.tag "latest" }}
+          imagePullPolicy: {{ .Values.mqttBroker.image.pullPolicy }}
+          ports:
+            - name: mqtt
+              containerPort: {{ .Values.mqttBroker.containerPort }}
+          resources:
+            requests:
+              cpu: "250m"
+              memory: "250Mi"
+            limits:
+              cpu: "1"
+              memory: "500Mi"
+          volumeMounts:
+            - name: config
+              mountPath: /mosquitto/config/mosquitto.conf
+              subPath: mosquitto.conf
+              readOnly: true
+          livenessProbe:
+            tcpSocket:
+              port: {{ .Values.mqttBroker.containerPort }}
+          readinessProbe:
+            tcpSocket:
+              port: {{ .Values.mqttBroker.containerPort }}
+      volumes:
+        - name: config
+          configMap:
+            name: mqtt-config

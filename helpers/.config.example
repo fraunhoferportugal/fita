@@ -1,0 +1,8 @@
+# registry config example file
+REGISTRY_URL=
+REGISTRY_REPOSITORY=
+REGISTRY_USERNAME=
+REGISTRY_PASSWORD=asdasd
+
+# Note: the .config should be created using the following command
+# $ cp .config.example .config

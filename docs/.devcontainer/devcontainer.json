@@ -1,0 +1,10 @@
+{
+	"name": "FITA Docs DevContainer",
+	"build": {
+		"dockerfile": "Dockerfile"
+	},
+	"runArgs": [
+		"--network=host"
+	],
+	"remoteUser": "node"
+}
