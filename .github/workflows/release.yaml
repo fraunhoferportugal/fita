@@ -1,0 +1,65 @@
+name: Release
+
+on:
+  workflow_dispatch: {}
+
+  push:
+    tags:
+      - '**'
+
+jobs:
+  validate-tag:
+    runs-on: self-hosted
+    outputs:
+      semver-valid: ${{ steps.check-tag.outputs.valid }}
+    steps:
+      - uses: actions/checkout@v6
+      - name: Check if tag is a valid SemVer
+        id: check-tag
+        run: |
+          python3 -u .github/scripts/semver_regex.py
+        env:
+          TAG: ${{ github.ref_name }}
+
+  helm-chart:
+    runs-on: self-hosted
+    needs: validate-tag
+    if: needs.validate-tag.outputs.semver-valid == 'true'
+    steps:
+      - uses: actions/checkout@v6
+      - name: Set up Helm
+        uses: azure/setup-helm@v4
+        with:
+          version: "4.0.1"
+
+      - name: Log in to the Github registry
+        run: |
+          echo "${{ secrets.GITHUB_TOKEN }}" | helm registry login ghcr.io --username ${{ github.actor }} --password-stdin
+
+      - name: Package chart
+        run: |
+          cd deploy
+          helm package chart
+
+      - name: Store chart name and version
+        id: chart_data
+        run: |
+          cd deploy/chart
+          chart_name=$(yq '.name' Chart.yaml)
+          echo "chart_name=$chart_name" >> $GITHUB_OUTPUT
+
+          chart_version=$(yq '.version' Chart.yaml)
+          echo "chart_version=$chart_version" >> $GITHUB_OUTPUT
+
+      - name: Push chart to registry
+        run: |
+          cd deploy
+          helm push ${{ steps.chart_data.outputs.chart_name }}-${{ steps.chart_data.outputs.chart_version }}.tgz oci://ghcr.io/${{ github.repository_owner }}/fita/charts
+      
+      - name: Upload binaries to release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          draft: true
+          tag: ${{ github.ref }}
+          file: deploy/${{ steps.chart_data.outputs.chart_name }}-${{ steps.chart_data.outputs.chart_version }}.tgz
+          overwrite: true
