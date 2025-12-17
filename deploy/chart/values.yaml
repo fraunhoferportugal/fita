@@ -1,4 +1,5 @@
 mqttBroker:
+  enabled: true
   containerPort: 1883
   nodePort: 30010
   image:
