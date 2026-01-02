@@ -2,7 +2,7 @@ name: Update component releases
 
 on:
   schedule:
-    - cron: "0 * * * *"
+    - cron: "0 3 * * 1"
   workflow_dispatch: {}
 
 jobs:
@@ -14,12 +14,12 @@ jobs:
       relsync-output: ${{ steps.relsync.outputs.output }}
     steps:
       - name: Install RelSync
-        run: pip install git+https://github.com/fraunhoferportugal/RelSync.git@main
+        run: pip install git+https://github.com/fraunhoferportugal/RelSync.git@main --break-system-packages
 
-      - name: Checkout main branch
+      - name: Checkout development branch
         uses: actions/checkout@v6
         with:
-          ref: main
+          ref: development
           submodules: true
 
       - name: Configure committer info
@@ -33,12 +33,16 @@ jobs:
       - name: Fetch new submodules and commit with updated tags and Chart
         id: relsync
         run: |
-          output=$(relsync update --commit --output json)
+          output=$(relsync update --commit --no-backup --prerelease-identifier development --output json)
           echo "$output"
 
           changed=$(echo "$output" | jq -r '.committed_changes')
           echo "changed=$changed" >> $GITHUB_OUTPUT
-          echo "output=$output" >> $GITHUB_OUTPUT
+          {
+            echo "output<<EOF"
+            echo "$output"
+            echo "EOF"
+          } >> "$GITHUB_OUTPUT"
       
       - name: Push changes
         if: ${{ steps.relsync.outputs.changed == 'true' }}
@@ -54,16 +58,18 @@ jobs:
     needs: sync
     steps:
       - name: Install RelSync
-        run: pip install git+https://github.com/fraunhoferportugal/RelSync.git@main
+        run: pip install git+https://github.com/fraunhoferportugal/RelSync.git@main --break-system-packages
 
-      - name: Checkout main branch
+      - name: Checkout development branch
         uses: actions/checkout@v6
+        with:
+          ref: development
 
       - name: Create PR for submodule update branch
         id: create-pr
         uses: peter-evans/create-pull-request@v7
         with:
-          base: main
+          base: development
           title: "[relsync] Update submodule releases"
           labels: |
             bot-pr
@@ -76,9 +82,13 @@ jobs:
         id: create-message
         run: |
           message=$(echo "${{ needs.sync.outputs.relsync-output }}" | relsync format -o comment)
-          echo "message=$message" >> $GITHUB_OUTPUT
+          {
+            echo "message<<EOF"
+            echo "$message"
+            echo "EOF"
+          } >> "$GITHUB_OUTPUT"
 
-          changed=$(echo "$output" | jq -r '.committed_changes')
+          changed=$(echo "${{ needs.sync.outputs.relsync-output }}" | jq -r '.committed_changes')
           echo "changed=$changed" >> $GITHUB_OUTPUT
 
       - name: Create comment
