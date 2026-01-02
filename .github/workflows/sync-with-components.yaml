@@ -45,7 +45,7 @@ jobs:
           } >> "$GITHUB_OUTPUT"
       
       - name: Push changes
-        if: ${{ steps.relsync.outputs.changed == 'true' }}
+        if: ${{ steps.relsync.outputs.changed == true }}
         run: git push origin relsync/releases --force-with-lease
       
   create-pr:
@@ -91,7 +91,10 @@ jobs:
             echo "EOF"
           } >> "$GITHUB_OUTPUT"
 
-          changed=$(echo "${{ needs.sync.outputs.relsync-output }}" | jq -r '.committed_changes')
+          changed=$(jq -r '.committed_changes' <<EOF
+          ${{ needs.sync.outputs.relsync-output }}
+          EOF
+          )
           echo "changed=$changed" >> $GITHUB_OUTPUT
 
       - name: Create comment
