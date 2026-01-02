@@ -81,7 +81,10 @@ jobs:
       - name: Create message
         id: create-message
         run: |
-          message=$(echo "${{ needs.sync.outputs.relsync-output }}" | relsync format -o comment)
+          message="$(relsync format -o comment <<EOF
+          ${{ needs.sync.outputs.relsync-output }}
+          EOF
+          )"
           {
             echo "message<<EOF"
             echo "$message"
