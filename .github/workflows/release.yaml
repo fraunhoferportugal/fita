@@ -67,7 +67,7 @@ jobs:
       - name: Package chart
         run: |
           cd deploy
-          helm package chart
+          helm package chart --dependency-update
 
       - name: Store chart name and version
         id: chart_data
