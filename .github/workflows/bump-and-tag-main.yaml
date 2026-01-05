@@ -43,7 +43,7 @@ jobs:
     name: Bump and tag FITA version
     runs-on: self-hosted
     needs: check-skip
-    if: github.event.pull_request.merged == false || needs.check-skip.outputs.skip-tag == 'false'
+    if: github.event_name == 'workflow_dispatch' || needs.check-skip.outputs.skip-tag == 'false'
     outputs:
       new-tag: ${{ steps.tag.outputs.new-tag }}
     steps:
