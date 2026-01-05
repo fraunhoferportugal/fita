@@ -1,7 +1,13 @@
 name: Release
 
 on:
-  workflow_dispatch: {}
+  workflow_call:
+    inputs:
+      tag:
+        description: "Tag to release"
+        required: false
+        type: string
+        default: ""
 
   push:
     tags:
@@ -11,22 +17,44 @@ jobs:
   validate-tag:
     runs-on: self-hosted
     outputs:
+      tag: ${{ steps.tag.outputs.tag-name }}
       semver-valid: ${{ steps.check-tag.outputs.valid }}
     steps:
       - uses: actions/checkout@v6
+
+      - name: Determine tag
+        id: tag
+        run: |
+          if [ -n "${{ inputs.tag }}" ]; then
+            TAG_NAME="${{ inputs.tag }}"
+          elif [[ "$GITHUB_REF" =~ refs/tags/(.+) ]]; then
+            TAG_NAME="${BASH_REMATCH[1]}"
+          else
+            echo "No tag found"
+            exit 1
+          fi
+          echo "tag-name=$TAG_NAME" >> $GITHUB_OUTPUT
+
       - name: Check if tag is a valid SemVer
         id: check-tag
         run: |
           python3 -u .github/scripts/semver_regex.py
         env:
-          TAG: ${{ github.ref_name }}
+          TAG: ${{ steps.tag.outputs.tag-name }}
 
   helm-chart:
+    name: Publish Helm chart
     runs-on: self-hosted
     needs: validate-tag
     if: needs.validate-tag.outputs.semver-valid == 'true'
+    permissions:
+      contents: write
+      packages: write
     steps:
       - uses: actions/checkout@v6
+        with:
+          ref: refs/tags/${{ needs.validate-tag.outputs.tag }}
+
       - name: Set up Helm
         uses: azure/setup-helm@v4
         with:
@@ -51,15 +79,16 @@ jobs:
           chart_version=$(yq '.version' Chart.yaml)
           echo "chart_version=$chart_version" >> $GITHUB_OUTPUT
 
-      - name: Push chart to registry
+      - name: Push Helm chart to registry
         run: |
           cd deploy
-          helm push ${{ steps.chart_data.outputs.chart_name }}-${{ steps.chart_data.outputs.chart_version }}.tgz oci://ghcr.io/${{ github.repository_owner }}/fita/charts
+          helm push ${{ steps.chart_data.outputs.chart_name }}-${{ steps.chart_data.outputs.chart_version }}.tgz oci://ghcr.io/${{ github.repository_owner }}
       
-      - name: Upload binaries to release
-        uses: svenstaro/upload-release-action@v2
-        with:
-          draft: true
-          tag: ${{ github.ref }}
-          file: deploy/${{ steps.chart_data.outputs.chart_name }}-${{ steps.chart_data.outputs.chart_version }}.tgz
-          overwrite: true
+      - name: Upload Helm chart to release
+        run: |
+          gh release view "$TAG" >/dev/null 2>&1 || gh release create "$TAG" --draft --title "$TAG"
+          mv deploy/${{ steps.chart_data.outputs.chart_name }}-${{ steps.chart_data.outputs.chart_version }}.tgz deploy/${{ steps.chart_data.outputs.chart_name }}-chart-${{ steps.chart_data.outputs.chart_version }}.tgz
+          gh release upload "$TAG" deploy/${{ steps.chart_data.outputs.chart_name }}-chart-${{ steps.chart_data.outputs.chart_version }}.tgz --clobber
+        env:
+          TAG: ${{ needs.validate-tag.outputs.tag }}
+          GH_TOKEN: ${{ github.token }}

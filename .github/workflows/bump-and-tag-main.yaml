@@ -1,0 +1,150 @@
+name: Bump, tag and release main
+on:
+  pull_request:
+    types: [closed]
+    branches:
+      - main
+
+  workflow_dispatch:
+    inputs:
+      bump:
+        type: string
+        default: none
+        required: true
+        description: "The type of bump to use in the tag"
+
+permissions:
+  contents: write
+  pull-requests: read
+  packages: write
+
+jobs:
+  check-skip:
+    if: github.event.pull_request.merged == true
+    runs-on: self-hosted
+    outputs:
+      skip-tag: ${{ steps.check.outputs.skip-tag }}
+    steps:
+      - name: Check PR labels and target branch
+        id: check
+        run: |
+          TARGET_BRANCH=$(jq -r .pull_request.base.ref $GITHUB_EVENT_PATH)
+          PR_LABELS=$(jq -r '.pull_request.labels[].name' $GITHUB_EVENT_PATH || echo "")
+          echo "Target branch: $TARGET_BRANCH"
+          echo "PR labels: $PR_LABELS"
+
+          if [ "$TARGET_BRANCH" != "main" ] || echo "$PR_LABELS" | grep -q "no-tag"; then
+            echo "skip-tag=true" >> $GITHUB_OUTPUT
+          else
+            echo "skip-tag=false" >> $GITHUB_OUTPUT
+          fi
+
+  bump-and-tag:
+    name: Bump and tag FITA version
+    runs-on: self-hosted
+    needs: check-skip
+    if: needs.check-skip.outputs.skip-tag == 'false'
+    outputs:
+      new-tag: ${{ steps.tag.outputs.new-tag }}
+    steps:
+      - name: Install RelSync
+        run: pip install git+https://github.com/fraunhoferportugal/RelSync.git@main --break-system-packages
+
+      - name: Checkout code
+        uses: actions/checkout@v6
+        with:
+          ref: main
+
+      - name: Set up Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Determine bump type from PR comments
+        id: bump
+        if: github.event.pull_request.merged == true
+        run: |
+          comments=$(gh api repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/comments \
+            --jq 'sort_by(.created_at) | reverse | .[].body')
+      
+          app_bump="none"
+          # Regex:
+          # !relsync bump (major|minor|patch)
+          while IFS= read -r comment; do
+            if [[ "$comment" =~ !relsync[[:space:]]+bump[[:space:]]+(major|minor|patch) ]]; then
+              bump="${BASH_REMATCH[1]}"
+              app_bump="$bump"
+
+              break
+            fi
+          done <<< "$comments"
+      
+          echo "app-bump=$app_bump" >> $GITHUB_OUTPUT
+        env:
+          GH_TOKEN: ${{ github.token }}
+
+      - name: Update and tag
+        id: tag
+        run: |
+          if [ -n "${{ steps.bump.outputs.app-bump }}" ] && [ "${{ steps.bump.outputs.app-bump }}" != "none" ]; then
+            app_bump="${{ steps.bump.outputs.app-bump }}"
+          elif [ -n "${{ inputs.bump }}" ] && [ "${{ inputs.bump }}" != "none" ]; then
+            app_bump="${{ inputs.bump }}"
+          else
+            app_bump=$(yq -r '.annotations."relsync/bump"' deploy/chart/Chart.yaml)
+          fi 
+
+          base_version=$(yq -r '.annotations."relsync/base-version"' deploy/chart/Chart.yaml)
+          yq -i '.version = "$base_version"' deploy/chart/Chart.yaml
+          
+          output=$(
+            relsync bump $app_bump \
+              --chart-bump-type $app_bump \
+              --commit \
+              --create-tag \
+              -o json
+          )
+          new_tag=$(echo $output | jq '.newTag' -r)
+          echo "new-tag=$new_tag"
+          echo "new-tag=$new_tag" >> $GITHUB_OUTPUT
+        
+      - name: Push the new tag
+        run: |
+          git push
+          git push origin ${{ steps.tag.outputs.new-tag }}
+
+  release:
+    needs: bump-and-tag
+    uses: ./.github/workflows/release.yaml
+    with:
+      tag: ${{ needs.bump-and-tag.outputs.new-tag }}
+
+  sync-development:
+    name: Sync development branch
+    needs: release
+    runs-on: self-hosted
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          ref: development
+
+      - name: Set up Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Merge main into development
+        run: |
+          git fetch origin main
+          git merge --no-ff origin/main -m "Merge main into development after release ${{ needs.create-tag.outputs.new-tag }}" || true
+
+      - name: Push changes
+        run: |
+          git push origin development
+
+
+
