@@ -130,7 +130,7 @@ jobs:
 
   release:
     needs: bump-and-tag
-    if:  ${{ needs.bump-and-tag.outputs.new-tag != 'skipped' }}
+    if: ${{ needs.bump-and-tag.result == 'success' && needs.bump-and-tag.outputs.new-tag != 'skipped' }}
     uses: ./.github/workflows/release.yaml
     with:
       tag: ${{ needs.bump-and-tag.outputs.new-tag }}
@@ -161,6 +161,3 @@ jobs:
       - name: Push changes
         run: |
           git push origin development
-
-
-
