@@ -56,6 +56,17 @@ jobs:
           ref: main
           fetch-tags: true
 
+      - run: |
+          latest_tag=$(git tag -l | sort -Vr | head -n1)
+          echo "Latest tag: $latest_tag"
+
+      - run: |
+          git fetch --tags
+
+      - run: |
+          latest_tag=$(git tag -l | sort -Vr | head -n1)
+          echo "Latest tag: $latest_tag"
+
       - name: Set up Git
         run: |
           git config user.name "github-actions[bot]"
