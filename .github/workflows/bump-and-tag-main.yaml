@@ -138,7 +138,7 @@ jobs:
 
   sync-development:
     name: Sync development branch
-    needs: release
+    needs: ["release", "bump-and-tag"]
     runs-on: self-hosted
     permissions:
       contents: write
@@ -157,7 +157,7 @@ jobs:
       - name: Merge main into development
         run: |
           git fetch origin main
-          git merge --no-ff origin/main -m "Merge main into development after release ${{ needs.create-tag.outputs.new-tag }}" || true
+          git merge --no-ff origin/main -m "Merge main into development after release ${{ needs.bump-and-tag.outputs.new-tag }}" || true
 
       - name: Push changes
         run: |
