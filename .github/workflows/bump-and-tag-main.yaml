@@ -43,7 +43,7 @@ jobs:
     name: Bump and tag FITA version
     runs-on: self-hosted
     needs: check-skip
-    if: needs.check-skip.outputs.skip-tag == 'false'
+    if: github.event.pull_request.merged == false || needs.check-skip.outputs.skip-tag == 'false'
     outputs:
       new-tag: ${{ steps.tag.outputs.new-tag }}
     steps:
@@ -92,9 +92,10 @@ jobs:
             app_bump="${{ inputs.bump }}"
           else
             app_bump=$(yq -r '.annotations."relsync/bump"' deploy/chart/Chart.yaml)
-          fi 
+          fi
 
           base_version=$(yq -r '.annotations."relsync/base-version"' deploy/chart/Chart.yaml)
+          echo "App bump \"$app_bump\" on \"$base_version\""
           yq -i ".version = \"$base_version\"" deploy/chart/Chart.yaml
           
           output=$(
