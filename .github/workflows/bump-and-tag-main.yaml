@@ -130,7 +130,7 @@ jobs:
 
   release:
     needs: bump-and-tag
-    if:  needs.bump-and-tag.outputs.new-tag != "skipped"
+    if:  ${{ needs.bump-and-tag.outputs.new-tag }} != "skipped"
     uses: ./.github/workflows/release.yaml
     with:
       tag: ${{ needs.bump-and-tag.outputs.new-tag }}
