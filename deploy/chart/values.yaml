@@ -5,16 +5,13 @@ mqttBroker:
   image:
     repository: docker.io/eclipse-mosquitto
     pullPolicy: Always
-    tag: "2"
-
+    tag: '2'
 nextgengw:
   mqttBroker:
-    host: "mqtt-broker"
-
+    host: mqtt-broker
 far-edge-node-watcher:
   mqttBroker:
-    host: "mqtt-broker"
-
+    host: mqtt-broker
 far-edge-connection-provisioner:
   mqttBroker:
-    host: "mqtt-broker"
+    host: mqtt-broker
