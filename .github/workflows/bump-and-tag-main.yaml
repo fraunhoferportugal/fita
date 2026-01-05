@@ -43,7 +43,7 @@ jobs:
     name: Bump and tag FITA version
     runs-on: self-hosted
     needs: check-skip
-    if: github.event_name == 'workflow_dispatch' || needs.check-skip.outputs.skip-tag == 'false'
+    if: github.event_name == 'workflow_dispatch' || (needs.check-skip.result == 'success' && needs.check-skip.outputs.skip-tag == 'false')
     outputs:
       new-tag: ${{ steps.tag.outputs.new-tag }}
     steps:
@@ -109,10 +109,10 @@ jobs:
               --commit \
               --create-tag \
               -o json
-          )
-          relsync_exit_code=$?
+          ) || relsync_exit_code=$?
+          relsync_exit_code=${relsync_exit_code:-0}
 
-          if [ $relsync_exit_code -neq 0 ]; then
+          if [ $relsync_exit_code -ne 0 ]; then
             echo "relsync returned $relsync_exit_code, stopping execution gracefully"
             echo "new-tag=skipped" >> "$GITHUB_OUTPUT"
             exit 0
