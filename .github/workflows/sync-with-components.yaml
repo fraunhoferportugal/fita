@@ -45,8 +45,8 @@ jobs:
           } >> "$GITHUB_OUTPUT"
       
       - name: Push changes
-        if: ${{ steps.relsync.outputs.changed == true }}
-        run: git push origin relsync/releases --force-with-lease
+        if: ${{ steps.relsync.outputs.changed == 'true' }}
+        run: git push origin relsync/releases --force
       
   create-pr:
     name: Create submodule update PR
@@ -65,11 +65,15 @@ jobs:
         with:
           ref: development
 
+      - name: Reset to relsync branch
+        run: |
+          git fetch origin relsync/releases:relsync/releases
+          git reset --hard relsync/releases
+
       - name: Create PR for submodule update branch
         id: create-pr
-        uses: peter-evans/create-pull-request@v7
+        uses: peter-evans/create-pull-request@v8
         with:
-          base: development
           title: "[relsync] Update submodule releases"
           labels: |
             bot-pr
