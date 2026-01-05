@@ -95,7 +95,7 @@ jobs:
           fi 
 
           base_version=$(yq -r '.annotations."relsync/base-version"' deploy/chart/Chart.yaml)
-          yq -i '.version = "$base_version"' deploy/chart/Chart.yaml
+          yq -i ".version = \"$base_version\"" deploy/chart/Chart.yaml
           
           output=$(
             relsync bump $app_bump \
