@@ -43,7 +43,7 @@ jobs:
     name: Bump and tag FITA version
     runs-on: self-hosted
     needs: check-skip
-    if: github.event_name == 'workflow_dispatch' || (needs.check-skip.result == 'success' && needs.check-skip.outputs.skip-tag == 'false')
+    if: ${{ always() && (github.event_name == 'workflow_dispatch' || (needs.check-skip.result == 'success' && needs.check-skip.outputs.skip-tag == 'false')) }}
     outputs:
       new-tag: ${{ steps.tag.outputs.new-tag }}
     steps:
@@ -123,14 +123,14 @@ jobs:
           echo "new-tag=$new_tag" >> $GITHUB_OUTPUT
         
       - name: Push the new tag
-        if: ${{ steps.tag.outputs.new-tag }} != "skipped"
+        if: ${{ steps.tag.outputs.new-tag != 'skipped' }}
         run: |
           git push
           git push origin ${{ steps.tag.outputs.new-tag }}
 
   release:
     needs: bump-and-tag
-    if:  ${{ needs.bump-and-tag.outputs.new-tag }} != "skipped"
+    if: ${{ needs.bump-and-tag.result == 'success' && needs.bump-and-tag.outputs.new-tag != 'skipped' }}
     uses: ./.github/workflows/release.yaml
     with:
       tag: ${{ needs.bump-and-tag.outputs.new-tag }}
@@ -161,6 +161,3 @@ jobs:
       - name: Push changes
         run: |
           git push origin development
-
-
-
