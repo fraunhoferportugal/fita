@@ -56,7 +56,8 @@ jobs:
           ref: main
 
       - run: |
-          git fetch --tags          
+          git tag -l | xargs -r git tag -d
+          git fetch --tags origin
 
       - name: Set up Git
         run: |
@@ -74,7 +75,7 @@ jobs:
           # Regex:
           # !relsync bump (major|minor|patch)
           while IFS= read -r comment; do
-            if [[ "$comment" =~ !relsync[[:space:]]+bump[[:space:]]+(major|minor|patch) ]]; then
+            if [[ "$comment" =~ !relsync[[:space:]]+bump[[:space:]]+(major|minor|patch|release) ]]; then
               bump="${BASH_REMATCH[1]}"
               app_bump="$bump"
 
