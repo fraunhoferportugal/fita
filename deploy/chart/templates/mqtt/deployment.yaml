@@ -1,3 +1,4 @@
+{{- if .Values.mqttBroker.enabled }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -43,3 +44,4 @@ spec:
         - name: config
           configMap:
             name: mqtt-config
+{{- end }}

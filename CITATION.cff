@@ -1,0 +1,37 @@
+# This CITATION.cff file was generated with cffinit.
+# Visit https://bit.ly/cffinit to generate yours today!
+
+cff-version: 1.2.0
+title: FITA
+message: >-
+  If you use this software, please cite it using the
+  metadata from this file.
+type: software
+authors:
+  - given-names: Carlos
+    family-names: Resende
+    email: carlos.resende@fraunhofer.pt
+    affiliation: Fraunhofer Portugal AICOS
+    orcid: 'https://orcid.org/0000-0002-1834-0420'
+  - affiliation: Fraunhofer Portugal AICOS
+    given-names: João
+    family-names: Oliveira
+    email: joao.oliveira@fraunhofer.pt
+    orcid: 'https://orcid.org/0000-0003-3667-4958'
+  - given-names: Fernando
+    family-names: Rego
+    email: fernando.rego@fraunhofer.pt
+    affiliation: Fraunhofer Portugal AICOS
+    orcid: 'https://orcid.org/0009-0003-9648-1231'
+  - given-names: José
+    family-names: Costa
+    email: jose.costa@fraunhofer.pt
+    affiliation: Fraunhofer Portugal AICOS
+    orcid: 'https://orcid.org/0009-0006-6508-8180'
+identifiers:
+  - type: url
+    value: 'https://github.com/fraunhoferportugal/fita'
+  - type: doi
+    value: 10.1109/OJIES.2025.3581076
+repository-code: 'https://github.com/fraunhoferportugal/fita'
+license: AGPL-3.0

@@ -1,0 +1,20 @@
+mqttBroker:
+  enabled: true
+  containerPort: 1883
+  nodePort: 30010
+  image:
+    repository: docker.io/eclipse-mosquitto
+    pullPolicy: Always
+    tag: "2"
+
+nextgengw:
+  mqttBroker:
+    host: "mqtt-broker"
+
+far-edge-node-watcher:
+  mqttBroker:
+    host: "mqtt-broker"
+
+far-edge-connection-provisioner:
+  mqttBroker:
+    host: "mqtt-broker"

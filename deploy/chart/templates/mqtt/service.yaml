@@ -1,3 +1,4 @@
+{{- if .Values.mqttBroker.enabled }}
 apiVersion: v1
 kind: Service
 metadata:
@@ -11,3 +12,4 @@ spec:
       nodePort: {{ .Values.mqttBroker.nodePort }}
       name: "mqtt"
   type: NodePort
+{{- end }}
