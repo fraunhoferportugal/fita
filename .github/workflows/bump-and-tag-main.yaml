@@ -95,9 +95,14 @@ jobs:
           fi
 
           base_version=$(yq -r '.annotations."relsync/base-version"' deploy/chart/Chart.yaml)
-          echo "App bump \"$app_bump\" on \"$base_version\""
-          yq -i ".version = \"$base_version\"" deploy/chart/Chart.yaml
-          
+          if [ "$base_version" != "null" ]; then
+            yq -i ".version = \"$base_version\"" deploy/chart/Chart.yaml
+            echo "App bump \"$app_bump\" on \"$base_version\""
+          else
+            base_version=$(yq -r '.version' deploy/chart/Chart.yaml)
+            echo "App bump \"$app_bump\" on \"$base_version\""
+          fi
+
           output=$(
             relsync bump $app_bump \
               --chart-bump-type $app_bump \
