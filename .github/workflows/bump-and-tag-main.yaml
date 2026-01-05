@@ -110,17 +110,27 @@ jobs:
               --create-tag \
               -o json
           )
+          relsync_exit_code=$?
+
+          if [ $relsync_exit_code -neq 0 ]; then
+            echo "relsync returned $relsync_exit_code, stopping execution gracefully"
+            echo "new-tag=skipped" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
           new_tag=$(echo $output | jq '.newTag' -r)
           echo "new-tag=$new_tag"
           echo "new-tag=$new_tag" >> $GITHUB_OUTPUT
         
       - name: Push the new tag
+        if: ${{ steps.tag.outputs.new-tag }} != "skipped"
         run: |
           git push
           git push origin ${{ steps.tag.outputs.new-tag }}
 
   release:
     needs: bump-and-tag
+    if:  needs.bump-and-tag.outputs.new-tag != "skipped"
     uses: ./.github/workflows/release.yaml
     with:
       tag: ${{ needs.bump-and-tag.outputs.new-tag }}
