@@ -50,16 +50,16 @@ jobs:
       - name: Install RelSync
         run: pip install git+https://github.com/fraunhoferportugal/RelSync.git@main --break-system-packages
 
+      - name: Checkout code
+        uses: actions/checkout@v6
+        with:
+          ref: main
+
       - uses: actions/setup-node@v6
         with:
           node-version: 24
           cache: npm
           cache-dependency-path: website/package-lock.json
-
-      - name: Checkout code
-        uses: actions/checkout@v6
-        with:
-          ref: main
 
       - run: |
           git tag -l | xargs -r git tag -d
