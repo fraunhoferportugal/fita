@@ -50,6 +50,12 @@ jobs:
       - name: Install RelSync
         run: pip install git+https://github.com/fraunhoferportugal/RelSync.git@main --break-system-packages
 
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: docs/package-lock.json
+
       - name: Checkout code
         uses: actions/checkout@v6
         with:
@@ -87,54 +93,42 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
 
-      - name: Update and tag
+      - name: Compute new tag
         id: tag
-        run: |
-          if [ -n "${{ steps.bump.outputs.app-bump }}" ] && [ "${{ steps.bump.outputs.app-bump }}" != "none" ]; then
-            app_bump="${{ steps.bump.outputs.app-bump }}"
-          elif [ -n "${{ inputs.bump }}" ] && [ "${{ inputs.bump }}" != "none" ]; then
-            app_bump="${{ inputs.bump }}"
-          else
-            app_bump=$(yq -r '.annotations."relsync/bump"' deploy/chart/Chart.yaml)
-          fi
-
-          latest_tag=$(git tag -l | sort -Vr | head -n1)
-          latest_tag=${latest_tag:-0.0.0}
-          echo "Latest tag: $latest_tag"
-          echo "App bump \"$app_bump\" on \"$latest_tag\""
-
-
-          base_version=$(yq -r '.annotations."relsync/base-version"' deploy/chart/Chart.yaml)
-          current_version=$(yq -r '.version' deploy/chart/Chart.yaml)
-          if [ "$base_version" != "null" ]; then
-            yq -i ".version = \"$base_version\"" deploy/chart/Chart.yaml
-          else
-            base_version=$current_version
-          fi
-          echo "Chart bump \"$app_bump\" on \"$base_version\" - (current version: \"$current_version\")"
-
-          output=$(
-            relsync bump $app_bump \
-              --chart-bump-type $app_bump \
-              --commit \
-              --create-tag \
-              -o json
-          ) || relsync_exit_code=$?
-          relsync_exit_code=${relsync_exit_code:-0}
-
-          if [ $relsync_exit_code -ne 0 ]; then
-            echo "relsync returned $relsync_exit_code, stopping execution gracefully"
-            echo "new-tag=skipped" >> "$GITHUB_OUTPUT"
-            exit 0
-          fi
-
-          new_tag=$(echo $output | jq '.newTag' -r)
-          echo "new-tag=$new_tag"
-          echo "new-tag=$new_tag" >> $GITHUB_OUTPUT
+        env:
+          APP_BUMP: ${{ steps.bump.outputs.app-bump }}
+        run: ./.github/scripts/compute-tag.sh
         
-      - name: Push the new tag
+      - name: Update Documentation
+        if: ${{ steps.tag.outputs.new-tag != 'skipped' }}
+        working-directory: ./docs
+        run: |
+          MAJOR_VERSION=$(echo "${{ steps.tag.outputs.new-tag }}" | cut -d. -f1)
+          echo "MAJOR_VERSION=$MAJOR_VERSION"
+          VERSIONED_DIR="./versioned_docs/version-${MAJOR_VERSION}.x"
+
+          if [ ! -d "$VERSIONED_DIR" ]; then
+              echo "Versioned docs do not exist. Creating..."
+              npm ci
+              npm run docusaurus docs:version "${MAJOR_VERSION}.x"
+              echo "Created versioned docs at $VERSIONED_DIR"
+          else
+              exit 0
+          fi
+
+          git add .
+          git commit -m "Create versioned documentation for version \"${MAJOR_VERSION}.x\""
+          git push origin HEAD
+
+      - name: Create and push tag
         if: ${{ steps.tag.outputs.new-tag != 'skipped' }}
         run: |
+          relsync bump ${{ steps.tag.outputs.new-tag }} \
+            --chart-bump-type ${{ steps.tag.outputs.new-tag }} \
+            --commit \
+            --create-tag \
+            -o json
+
           git push
           git push origin ${{ steps.tag.outputs.new-tag }}
 
@@ -172,3 +166,9 @@ jobs:
       - name: Push changes
         run: |
           git push origin development
+
+  deploy-documentation:
+    name: Deploy Documentation
+    needs: ["release", "bump-and-tag"]
+    if: ${{ always() && needs.release.result == 'success'}}
+    uses: ./.github/workflows/docs-deploy.yaml

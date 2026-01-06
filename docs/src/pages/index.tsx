@@ -20,17 +20,17 @@ function HomepageHeader() {
         <div className={styles.buttons} style={{ gap: '2rem' }}>
           <Link
             className="button button--secondary button--lg"
-            to="/docs/intro">
+            to="/fita/docs">
             About FITA
           </Link>
           <Link
             className="button button--secondary button--lg"
-            to="/docs/getting-started/intro">
+            to="/fita/docs/getting-started/intro">
             FITA Getting Started
           </Link>
           <Link
             className="button button--secondary button--lg"
-            to="/demos/FITA%20Demos/intro">
+            to="/fita/demos">
             FITA Demos
           </Link>
         </div>

@@ -1,56 +1,55 @@
-# name: Deploy Docs to GitHub Pages
+name: Deploy Docs to GitHub Pages
 
-# on:
-#   push:
-#     branches:
-#       - development
-#   
-#   workflow_run:
-#     workflows: ["Release"]
-#     types: ["completed"]
-#     concurrency:
-#       group: "docs-deploy"
-#       cancel-in-progress: true
+on:
+  workflow_run: {}
 
-# jobs:
-#   build:
-#     name: Build Docusaurus
-#     runs-on: ubuntu-latest
-#     steps:
-#       - uses: actions/checkout@v4
-#         with:
-#           fetch-depth: 0
-#       - uses: actions/setup-node@v4
-#         with:
-#           node-version: 22
-#           cache: npm
+  push:
+    branches:
+      - development
+    paths:
+      - docs/**
 
-#       - name: Install dependencies
-#         run: npm ci
-#       - name: Build website
-#         run: npm run build
+jobs:
+  build:
+    name: Build Docusaurus
+    runs-on: self-hosted
+    defaults:
+      run:
+        working-directory: ./docs/
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: docs/package-lock.json
 
-#       - name: Upload Build Artifact
-#         uses: actions/upload-pages-artifact@v4
-#         with:
-#           path: build
+      - name: Install dependencies
+        run: npm ci
+      - name: Build website
+        run: npm run build
 
-#   deploy:
-#     name: Deploy to GitHub Pages
-#     needs: build
+      - name: Upload Build Artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: ./build
 
-#     # Grant GITHUB_TOKEN the permissions required to make a Pages deployment
-#     permissions:
-#       pages: write # to deploy to Pages
-#       id-token: write # to verify the deployment originates from an appropriate source
+  deploy:
+    name: Deploy to GitHub Pages
+    needs: build
+    permissions:
+      pages: write 
+      id-token: write
 
-#     # Deploy to the github-pages environment
-#     environment:
-#       name: github-pages
-#       url: ${{ steps.deployment.outputs.page_url }}
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
 
-#     runs-on: ubuntu-latest
-#     steps:
-#       - name: Deploy to GitHub Pages
-#         id: deployment
-#         uses: actions/deploy-pages@v4
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+

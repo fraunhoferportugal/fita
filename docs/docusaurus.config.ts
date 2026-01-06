@@ -23,11 +23,14 @@ const config: Config = {
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
   organizationName: 'fraunhoferportugal', // Usually your GitHub org/user name.
-  projectName: 'fita-docs', // Usually your repo name.
+  projectName: 'fita', // Usually your repo name.
 
   onBrokenLinks: 'throw',
-  onBrokenMarkdownLinks: 'warn',
-
+  markdown: {
+    hooks: {
+      onBrokenMarkdownLinks: 'warn',
+    }
+  },
   // Even if you don't use internationalization, you can use this field to set
   // useful metadata like html lang. For example, if your site is Chinese, you
   // may want to replace "en" with "zh-Hans".
@@ -42,6 +45,8 @@ const config: Config = {
       {
         docs: {
           sidebarPath: './sidebars.ts',
+          path: './fita',
+          routeBasePath: 'fita',
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl: undefined,
@@ -70,24 +75,6 @@ const config: Config = {
   ],
 
   plugins: [
-    [
-      '@docusaurus/plugin-content-docs',
-      {
-        id: 'guides',
-        path: 'guides',
-        routeBasePath: 'guides',
-        sidebarPath: './sidebars.ts',
-      },
-    ],
-    [
-      '@docusaurus/plugin-content-docs',
-      {
-        id: 'demos',
-        path: 'demos',
-        routeBasePath: 'demos',
-        sidebarPath: './sidebars.ts',
-      },
-    ],
   ],
 
   themeConfig: {
@@ -103,28 +90,23 @@ const config: Config = {
         {
           type: 'docSidebar',
           sidebarId: 'docs',
-          position: 'left',
           label: 'Docs',
         },
         {
           type: 'docSidebar',
-          position: 'left',
-          sidebarId: 'guides',
-          docsPluginId: "guides",
-          label: 'Guides',
-        },
-        {
-          type: 'docSidebar',
-          position: 'left',
           sidebarId: 'demos',
-          docsPluginId: "demos",
           label: 'Demos',
         },
         { to: '/blog', label: 'Blog', position: 'left' },
         {
-          href: 'https://github.com/fraunhoferportugal/fita',
-          label: 'GitHub',
+          type: 'docsVersionDropdown',
           position: 'right',
+        },
+        {
+          href: 'https://github.com/fraunhoferportugal/fita',
+          position: 'right',
+          className: 'header-github-link',
+          'aria-label': 'GitHub repository',
         },
       ],
     },
@@ -135,12 +117,8 @@ const config: Config = {
           title: 'Documentation',
           items: [
             {
-              label: 'Docs',
-              to: '/docs/intro',
-            },
-            {
-              label: 'Guides',
-              to: '/guides/intro',
+              label: 'FITA',
+              to: '/fita/docs',
             }
           ],
         },
@@ -148,12 +126,12 @@ const config: Config = {
           title: 'Demonstrators',
           items: [
             {
-              label: 'FITA Demos',
-              to: '/demos/FITA%20Demos/intro',
+              label: 'Temperature Monitoring',
+              to: '/fita/demos/temperature-monitoring-demo',
             },
             {
-              label: 'MLSysOps Demo',
-              to: '/demos/FITA%20Demos/MLSysOps',
+              label: 'Intelligent Traffic Control',
+              to: '/fita/demos/intelligent-traffic-control-demo',
             },
           ],
         },
@@ -166,7 +144,7 @@ const config: Config = {
             },
             {
               label: 'Github',
-              href: '#',
+              href: 'https://github.com/fraunhoferportugal/fita',
             }
           ],
         },
