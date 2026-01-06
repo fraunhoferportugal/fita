@@ -21,7 +21,7 @@ permissions:
 jobs:
   check-skip:
     if: github.event.pull_request.merged == true
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     outputs:
       skip-tag: ${{ steps.check.outputs.skip-tag }}
     steps:
@@ -41,7 +41,7 @@ jobs:
 
   bump-and-tag:
     name: Bump and tag FITA version
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     needs: check-skip
     if: ${{ always() && (github.event_name == 'workflow_dispatch' || (needs.check-skip.result == 'success' && needs.check-skip.outputs.skip-tag == 'false')) }}
     outputs:
@@ -143,7 +143,7 @@ jobs:
     name: Sync development branch
     needs: ["release", "bump-and-tag"]
     if: ${{ always() && needs.release.result == 'success'}}
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     permissions:
       contents: write
     steps:

@@ -10,7 +10,7 @@ on:
 
 jobs:
   auto-update-docs:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     if: github.event.pull_request.base.ref == 'main'
     outputs:
       new-tag: ${{ steps.tag.outputs.new-tag }}
@@ -76,7 +76,7 @@ jobs:
     needs: [auto-update-docs]
     if: always() && ((github.event.pull_request.base.ref == 'main' && needs.auto-update-docs.outputs.new-tag != 'skipped') || github.event.pull_request.base.ref == 'development')
     name: Test build
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     defaults:
       run:
         working-directory: ./docs
