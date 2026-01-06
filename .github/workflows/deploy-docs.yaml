@@ -1,7 +1,7 @@
-name: Deploy Docs to GitHub Pages
+name: Deploy Documentation to GitHub Pages
 
 on:
-  workflow_run: {}
+  workflow_dispatch: {}
 
   push:
     branches:
