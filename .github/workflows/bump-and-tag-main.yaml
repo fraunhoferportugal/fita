@@ -168,12 +168,3 @@ jobs:
       - name: Push changes
         run: |
           git push origin development
-
-  deploy-documentation:
-    name: Deploy Documentation
-    needs: ["release", "bump-and-tag"]
-    if: ${{ always() && needs.release.result == 'success'}}
-    permissions:
-      pages: write
-      id-token: write
-    uses: ./.github/workflows/deploy-docs.yaml
