@@ -1,0 +1,103 @@
+name: Update and Test Documentation on PR
+
+on:
+  pull_request:
+    branches:
+      - main
+      - development
+    paths:
+      - docs/**
+
+jobs:
+  auto-update-docs:
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.base.ref == 'main'
+    outputs:
+      new-tag: ${{ steps.tag.outputs.new-tag }}
+    steps:
+      - name: Install RelSync
+        run: pip install git+https://github.com/fraunhoferportugal/RelSync.git@main --break-system-packages
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: docs/package-lock.json
+
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - run: |
+          git tag -l | xargs -r git tag -d
+          git fetch --tags origin
+
+      - name: Set up Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Determine bump type from PR comments
+        id: bump
+        run: |
+          comments=$(gh api repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/comments \
+            --jq 'sort_by(.created_at) | reverse | .[].body')
+      
+          app_bump="none"
+          # Regex:
+          # !relsync bump (major|minor|patch)
+          while IFS= read -r comment; do
+            if [[ "$comment" =~ !relsync[[:space:]]+bump[[:space:]]+(major|minor|patch|release) ]]; then
+              bump="${BASH_REMATCH[1]}"
+              app_bump="$bump"
+
+              break
+            fi
+          done <<< "$comments"
+      
+          echo "app-bump=$app_bump" >> $GITHUB_OUTPUT
+        env:
+          GH_TOKEN: ${{ github.token }}
+
+      - name: Compute new tag
+        id: tag
+        env:
+          APP_BUMP: ${{ steps.bump.outputs.app-bump }}
+        run: ./.github/scripts/compute-tag.sh
+
+      - name: Update Documentation
+        env:
+          GH_TOKEN: ${{ github.token }}
+          NEW_TAG: ${{ steps.tag.outputs.new-tag }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          PR_HEAD_BRANCH: ${{ github.event.pull_request.head.ref }}
+        run: ./.github/scripts/auto-update-docs.sh
+
+  test-build:
+    needs: [auto-update-docs]
+    if: always() && ((github.event.pull_request.base.ref == 'main' && needs.auto-update-docs.outputs.new-tag != 'skipped') || github.event.pull_request.base.ref == 'development')
+    name: Test build
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./docs
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: docs/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+      - name: Test build website
+        run: npm run build
+
+      - name: Publish archives as artifacts
+        uses: actions/upload-artifact@v6
+        with:
+          name: build
+          path: |
+            ./docs/build/

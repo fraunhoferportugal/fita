@@ -15,7 +15,7 @@ on:
 
 jobs:
   validate-tag:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     outputs:
       tag: ${{ steps.tag.outputs.tag-name }}
       semver-valid: ${{ steps.check-tag.outputs.valid }}
@@ -44,7 +44,7 @@ jobs:
 
   helm-chart:
     name: Publish Helm chart
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     needs: validate-tag
     if: needs.validate-tag.outputs.semver-valid == 'true'
     permissions:
