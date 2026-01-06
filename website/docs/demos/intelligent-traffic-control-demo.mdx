@@ -3,6 +3,9 @@ sidebar_position: 2
 ---
 
 import ReactPlayer from 'react-player'
+import IntelligentTrafficControlVideoURL from '@site/static/vid/intelligent-traffic-control.mp4';
+import IntelligentTrafficControlSystemIMG from '@site/static/img/intelligent-traffic-control-demo/intelligent_traffic_control_system.svg';
+
 
 # Intelligent Traffic Control Demo
 
@@ -10,7 +13,7 @@ This demonstrator showcases a traffic monitoring system on a Kubernetes cluster 
 
 ### High-level Overview
 
-![Intelligent Traffic Control Demo High-level Overview](/img/intelligent-traffic-control-demo/intelligent_traffic_control_system.svg)
+<IntelligentTrafficControlSystemIMG />;
 
 :::warning
 For demo purposes and since we are using an **emulated environment**, instead of using real images, we take advantage of a pre-recorded video that is sent to the emulated device. This is represented by the **red arrow** in the high-level overview.
@@ -122,7 +125,7 @@ This demo provides two main interactive components:
 
 The video stream is accessible at ```http://<IP_ADDRESS>:30100/stream.html?src=mystream```, where the ```<IP_ADDRESS>``` is the address of the host machine.
 
-<ReactPlayer playing controls muted width='100%' height='auto' src='/vid/intelligent-traffic-control.mp4' />
+<ReactPlayer playing controls muted width='100%' height='auto' src={IntelligentTrafficControlVideoURL} />
 
 #### Intelligent Traffic Control Dashboard
 
