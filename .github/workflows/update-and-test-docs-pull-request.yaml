@@ -12,6 +12,8 @@ jobs:
   auto-update-docs:
     runs-on: ubuntu-latest
     if: github.event.pull_request.base.ref == 'main'
+    permissions:
+      contents: write
     outputs:
       new-tag: ${{ steps.tag.outputs.new-tag }}
     steps:
