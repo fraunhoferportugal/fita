@@ -171,4 +171,4 @@ jobs:
     name: Deploy Documentation
     needs: ["release", "bump-and-tag"]
     if: ${{ always() && needs.release.result == 'success'}}
-    uses: ./.github/workflows/docs-deploy.yaml
+    uses: ./.github/workflows/deploy-docs.yaml
