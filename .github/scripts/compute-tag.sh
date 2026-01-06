@@ -5,6 +5,8 @@ CHART_FILE="deploy/chart/Chart.yaml"
 
 if [ -n "$APP_BUMP" ] && [ "$APP_BUMP" != "none" ]; then
   app_bump="$APP_BUMP"
+elif [ -n "$REQUESTED_BUMP" ] && [ "$REQUESTED_BUMP" != "none" ]
+  app_bump="$APP_BUMP"
 else
   app_bump=$(yq -r '.annotations."relsync/bump"' "$CHART_FILE")
 fi
