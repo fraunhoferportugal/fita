@@ -11,6 +11,7 @@ on:
 jobs:
   auto-update-docs:
     runs-on: self-hosted
+    if: github.event.pull_request.base.ref == 'main'
     outputs:
       new-tag: ${{ steps.tag.outputs.new-tag }}
     steps:
