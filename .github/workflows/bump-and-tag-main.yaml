@@ -125,8 +125,8 @@ jobs:
       - name: Create and push tag
         if: ${{ steps.tag.outputs.new-tag != 'skipped' }}
         run: |
-          relsync bump ${{ steps.tag.outputs.new-tag }} \
-            --chart-bump-type ${{ steps.tag.outputs.new-tag }} \
+          relsync bump ${{ steps.tag.outputs.app-bump }} \
+            --chart-bump-type ${{ steps.tag.outputs.app-bump }} \
             --commit \
             --create-tag \
             -o json
