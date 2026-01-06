@@ -16,7 +16,7 @@ if [ ! -d "$VERSIONED_DIR" ]; then
     echo "Created versioned docs at $VERSIONED_DIR"
     git add .
     git commit -m "Create versioned documentation for version \"${MAJOR_VERSION}.x\""
-    git push origin HEAD
+    git push origin $PR_HEAD_BRANCH
 else
     DOCS_UPDATE_BRANCH="docs/update-pr-${PR_NUMBER}"
     git checkout -B $DOCS_UPDATE_BRANCH origin/main
