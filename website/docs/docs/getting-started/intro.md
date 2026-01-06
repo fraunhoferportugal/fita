@@ -167,4 +167,4 @@ Now that FITA and the Far-edge device emulator is setup, we can go to [Add Far-e
 
 Advanced usage, such as the implementation of custom Far-edge workloads and the integration of Far-edge workloads with workloads running on other nodes of the cluster is explained in [Create embServe Workload](../advanced-usage/create-workload.md) and [Interact with Far-edge Workload](../advanced-usage/interact-workload.md), respectively.
 
-You can further explore FITA using the examples provided in the [demo section](/fita/demos/index.md).
+You can further explore FITA using the examples provided in the [demo section](../../demos/index.md).

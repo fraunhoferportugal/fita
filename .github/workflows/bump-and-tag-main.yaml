@@ -54,7 +54,7 @@ jobs:
         with:
           node-version: 24
           cache: npm
-          cache-dependency-path: docs/package-lock.json
+          cache-dependency-path: website/package-lock.json
 
       - name: Checkout code
         uses: actions/checkout@v6
@@ -101,11 +101,12 @@ jobs:
         
       - name: Update Documentation
         if: ${{ steps.tag.outputs.new-tag != 'skipped' }}
-        working-directory: ./docs
+        working-directory: ./website
         run: |
           MAJOR_VERSION=$(echo "${{ steps.tag.outputs.new-tag }}" | cut -d. -f1)
           echo "MAJOR_VERSION=$MAJOR_VERSION"
           VERSIONED_DIR="./versioned_docs/version-${MAJOR_VERSION}.x"
+          git checkout ${{ github.event.pull_request.head.ref }}
 
           if [ ! -d "$VERSIONED_DIR" ]; then
               echo "Versioned docs do not exist. Creating..."
@@ -118,7 +119,7 @@ jobs:
 
           git add .
           git commit -m "Create versioned documentation for version \"${MAJOR_VERSION}.x\""
-          git push origin HEAD
+          git push origin ${{ github.event.pull_request.head.ref }}
 
       - name: Create and push tag
         if: ${{ steps.tag.outputs.new-tag != 'skipped' }}

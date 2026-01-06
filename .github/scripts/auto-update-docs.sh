@@ -1,13 +1,14 @@
 #!/bin/bash
 set -e
-cd ./docs/
+cd ./website/
 
 echo "MAJOR_VERSION from $NEW_TAG"
 MAJOR_VERSION=$(echo "$NEW_TAG" | cut -d. -f1)
 echo "MAJOR_VERSION=$MAJOR_VERSION"
 
-DOCS_DIR="./fita"
+DOCS_DIR="./docs"
 VERSIONED_DIR="./versioned_docs/version-${MAJOR_VERSION}.x"
+git checkout $PR_HEAD_BRANCH
 
 if [ ! -d "$VERSIONED_DIR" ]; then
     echo "Versioned docs do not exist. Creating..."
@@ -16,10 +17,10 @@ if [ ! -d "$VERSIONED_DIR" ]; then
     echo "Created versioned docs at $VERSIONED_DIR"
     git add .
     git commit -m "Create versioned documentation for version \"${MAJOR_VERSION}.x\""
-    git push origin HEAD
+    git push origin $PR_HEAD_BRANCH
 else
     DOCS_UPDATE_BRANCH="docs/update-pr-${PR_NUMBER}"
-    git checkout -B $DOCS_UPDATE_BRANCH origin/main
+    git checkout -B $DOCS_UPDATE_BRANCH "$PR_HEAD_BRANCH"
 
     cp -r $DOCS_DIR/* $VERSIONED_DIR/
     git add .

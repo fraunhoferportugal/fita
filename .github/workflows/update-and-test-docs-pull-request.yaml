@@ -6,26 +6,28 @@ on:
       - main
       - development
     paths:
-      - docs/**
+      - website/**
 
 jobs:
   auto-update-docs:
     runs-on: ubuntu-latest
     if: github.event.pull_request.base.ref == 'main'
+    permissions:
+      contents: write
     outputs:
       new-tag: ${{ steps.tag.outputs.new-tag }}
     steps:
       - name: Install RelSync
         run: pip install git+https://github.com/fraunhoferportugal/RelSync.git@main --break-system-packages
 
+      - name: Checkout code
+        uses: actions/checkout@v6
+
       - uses: actions/setup-node@v6
         with:
           node-version: 24
           cache: npm
-          cache-dependency-path: docs/package-lock.json
-
-      - name: Checkout code
-        uses: actions/checkout@v6
+          cache-dependency-path: website/package-lock.json
 
       - run: |
           git tag -l | xargs -r git tag -d
@@ -74,12 +76,12 @@ jobs:
 
   test-build:
     needs: [auto-update-docs]
-    if: always() && ((github.event.pull_request.base.ref == 'main' && needs.auto-update-docs.outputs.new-tag != 'skipped') || github.event.pull_request.base.ref == 'development')
+    if: always() && ((github.event.pull_request.base.ref == 'main' && needs.auto-update-docs.result == 'success' && needs.auto-update-docs.outputs.new-tag != 'skipped') || github.event.pull_request.base.ref == 'development')
     name: Test build
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./docs
+        working-directory: ./website
     steps:
       - uses: actions/checkout@v6
         with:
@@ -88,7 +90,7 @@ jobs:
         with:
           node-version: 24
           cache: npm
-          cache-dependency-path: docs/package-lock.json
+          cache-dependency-path: website/package-lock.json
 
       - name: Install dependencies
         run: npm ci
@@ -100,4 +102,4 @@ jobs:
         with:
           name: build
           path: |
-            ./docs/build/
+            ./website/build/
