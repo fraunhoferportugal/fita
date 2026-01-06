@@ -54,7 +54,7 @@ jobs:
         with:
           node-version: 24
           cache: npm
-          cache-dependency-path: docs/package-lock.json
+          cache-dependency-path: website/package-lock.json
 
       - name: Checkout code
         uses: actions/checkout@v6
@@ -101,7 +101,7 @@ jobs:
         
       - name: Update Documentation
         if: ${{ steps.tag.outputs.new-tag != 'skipped' }}
-        working-directory: ./docs
+        working-directory: ./website
         run: |
           MAJOR_VERSION=$(echo "${{ steps.tag.outputs.new-tag }}" | cut -d. -f1)
           echo "MAJOR_VERSION=$MAJOR_VERSION"

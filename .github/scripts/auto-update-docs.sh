@@ -1,12 +1,12 @@
 #!/bin/bash
 set -e
-cd ./docs/
+cd ./website/
 
 echo "MAJOR_VERSION from $NEW_TAG"
 MAJOR_VERSION=$(echo "$NEW_TAG" | cut -d. -f1)
 echo "MAJOR_VERSION=$MAJOR_VERSION"
 
-DOCS_DIR="./fita"
+DOCS_DIR="./docs"
 VERSIONED_DIR="./versioned_docs/version-${MAJOR_VERSION}.x"
 
 if [ ! -d "$VERSIONED_DIR" ]; then
