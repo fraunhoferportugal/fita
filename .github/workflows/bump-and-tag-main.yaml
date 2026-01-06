@@ -97,6 +97,7 @@ jobs:
         id: tag
         env:
           APP_BUMP: ${{ steps.bump.outputs.app-bump }}
+          REQUESTED_BUMP: ${{ inputs.bump }}
         run: ./.github/scripts/compute-tag.sh
         
       - name: Update Documentation
