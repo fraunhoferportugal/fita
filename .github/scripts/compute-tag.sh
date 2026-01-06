@@ -42,3 +42,5 @@ fi
 new_tag=$(echo "$output" | jq -r '.newTag')
 echo "new-tag=$new_tag"
 echo "new-tag=$new_tag" >> "$GITHUB_OUTPUT"
+echo "app-bump=$app_bump"
+echo "app-bump=$app_bump" >> "$GITHUB_OUTPUT"
