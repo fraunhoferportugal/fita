@@ -106,6 +106,7 @@ jobs:
           MAJOR_VERSION=$(echo "${{ steps.tag.outputs.new-tag }}" | cut -d. -f1)
           echo "MAJOR_VERSION=$MAJOR_VERSION"
           VERSIONED_DIR="./versioned_docs/version-${MAJOR_VERSION}.x"
+          git checkout ${{ github.event.pull_request.head.ref }}
 
           if [ ! -d "$VERSIONED_DIR" ]; then
               echo "Versioned docs do not exist. Creating..."
@@ -118,7 +119,7 @@ jobs:
 
           git add .
           git commit -m "Create versioned documentation for version \"${MAJOR_VERSION}.x\""
-          git push origin HEAD:${{ github.event.pull_request.head.ref }}
+          git push origin ${{ github.event.pull_request.head.ref }}
 
       - name: Create and push tag
         if: ${{ steps.tag.outputs.new-tag != 'skipped' }}
