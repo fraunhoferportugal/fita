@@ -21,6 +21,7 @@ jobs:
         with:
           ref: development
           submodules: true
+          ssh-key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
 
       - name: Configure committer info
         run: |
