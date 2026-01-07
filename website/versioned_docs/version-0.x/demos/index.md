@@ -36,7 +36,7 @@ Here you can find a simple description for each available demo:
 
 This demonstrator showcases FITA by presenting a temperature monitoring setup using two (emulated) Far-Edge nodes built on top of a Kubernetes cluster. A custom component is deployed across the cluster to collect temperature data from the Far-Edge nodes. FITA is the core component of this demonstrator as it is responsible of enabling the connectivity to the Far-Edge devices and allowing the data collection. The goal of this demo is the simulation of a real-world monitoring scenario that collects environment metrics.
 
-[Try Demo 🚀](./temperature-monitoring-demo.md)
+[Try Demo 🚀](./temperature-monitoring-demo.mdx)
 
 ### Intelligent Traffic Control Demo
 

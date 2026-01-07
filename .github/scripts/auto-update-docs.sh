@@ -16,15 +16,14 @@ if [ ! -d "$VERSIONED_DIR" ]; then
     npm run docusaurus docs:version "${MAJOR_VERSION}.x"
     echo "Created versioned docs at $VERSIONED_DIR"
     git add .
-    git commit -m "Create versioned documentation for version \"${MAJOR_VERSION}.x\""
-    git push origin $PR_HEAD_BRANCH
+    git commit -m "[skip ci] Create versioned documentation for version \"${MAJOR_VERSION}.x\""
 else
     DOCS_UPDATE_BRANCH="docs/update-pr-${PR_NUMBER}"
     git checkout -B $DOCS_UPDATE_BRANCH "$PR_HEAD_BRANCH"
 
     cp -r $DOCS_DIR/* $VERSIONED_DIR/
     git add .
-    git commit -m "Update versioned documentation for version \"${MAJOR_VERSION}.x\"" || exit 0
+    git commit -m "[skip ci] Update versioned documentation for version \"${MAJOR_VERSION}.x\"" || exit 0
 
     git checkout "$PR_HEAD_BRANCH"
 
@@ -48,3 +47,4 @@ else
         exit 1
     fi
 fi
+git push origin $PR_HEAD_BRANCH
