@@ -13,6 +13,9 @@ on:
     tags:
       - '**'
 
+permissions:
+  contents: read
+
 jobs:
   validate-tag:
     runs-on: ubuntu-latest
