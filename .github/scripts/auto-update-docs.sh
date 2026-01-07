@@ -21,7 +21,8 @@ else
     DOCS_UPDATE_BRANCH="docs/update-pr-${PR_NUMBER}"
     git checkout -B $DOCS_UPDATE_BRANCH "$PR_HEAD_BRANCH"
 
-    cp -r $DOCS_DIR/* $VERSIONED_DIR/
+    rm -rf $VERSIONED_DIR/
+    cp -r $DOCS_DIR/ $VERSIONED_DIR/
     git add .
     git commit -m "[skip ci] Update versioned documentation for version \"${MAJOR_VERSION}.x\"" || exit 0
 
