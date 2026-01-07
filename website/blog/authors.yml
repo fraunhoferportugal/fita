@@ -1,11 +1,9 @@
-sirze01:
+josé:
   name: José Costa
-  title: Scientist
+  title: Researcher
   url: https://github.com/Sirze01
   image_url: https://github.com/Sirze01.png
   page: false
-  # socials:
-  #   x: yangshunz
-  #   linkedin: yangshun
-  #   github: yangshun
-  #   newsletter: https://www.greatfrontend.com
+  socials:
+    linkedin: sirze01
+    github: Sirze01

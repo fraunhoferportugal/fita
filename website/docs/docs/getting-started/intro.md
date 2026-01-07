@@ -160,8 +160,6 @@ IoTNetEMU creates networks interfaces dynamically, which requires access to the 
 For more details regarding IoTNetEMU and its configurations, refer to [here](../advanced-usage/iotnetemu.md).
 
 <br/>
-<br/>
-<br/>
 
 Now that FITA and the Far-edge device emulator is setup, we can go to [Add Far-edge Device in Kubernetes Cluster](./nodes.md), which explains with an hands-on example how are Far-edge devices added and represented in the Kubernetes cluster. [Deploy Workload on Far-edge Devices](./workloads.md) continues the hands-on example for the deployment of Far-edge device workloads.
 
