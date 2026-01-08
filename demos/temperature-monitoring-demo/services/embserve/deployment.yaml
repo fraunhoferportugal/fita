@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: temperature-deployment
+  labels:
+    app: temperature
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: temperature
+  template:
+    metadata:
+      labels:
+        app: temperature
+    spec:
+      containers:
+      - name: temperature
+        image: mlsysops/fita/services/temperature_sensor:0.1.0
+        imagePullPolicy: Always
+      nodeSelector:
+        extra.resources.fhp/embserve: "true"
+      tolerations:
+      - key: "fita.fhp.pt/type"
+        operator: "Equal"
+        value: "far-edge"
+        effect: "NoSchedule"
