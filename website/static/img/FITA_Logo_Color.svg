@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   id="Layer_1"
+   version="1.1"
+   viewBox="0 0 1080 1080"
+   sodipodi:docname="FITA_Logo_Color.svg"
+   inkscape:version="1.4.3 (0d15f75042, 2025-12-25)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview4"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="1.0768519"
+     inkscape:cx="540"
+     inkscape:cy="540"
+     inkscape:window-width="2560"
+     inkscape:window-height="1371"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="Layer_1" />
+  <!-- Generator: Adobe Illustrator 30.0.0, SVG Export Plug-In . SVG Version: 2.1.1 Build 123)  -->
+  <defs
+     id="defs4">
+    <style
+       id="style1">
+      .st0 {
+        fill: none;
+      }
+
+      .st1 {
+        fill: #00004d;
+      }
+
+      .st2 {
+        fill: url(#linear-gradient);
+      }
+
+      .st3 {
+        clip-path: url(#clippath);
+      }
+    </style>
+    <clipPath
+       id="clippath">
+      <polygon
+         class="st0"
+         points="251.8 354.4 251.8 354.7 251.6 354.5 190.6 415.6 251.6 476.6 251.8 476.4 251.8 476.6 251.8 476.7 251.8 477.1 251.6 476.9 190.6 537.9 251.5 598.8 190.7 659.6 251.8 720.6 312.8 659.6 252.1 598.8 375.1 598.8 375.2 598.9 436.2 537.9 375.2 476.9 375.2 476.7 498.8 476.7 498.8 476.6 559.8 415.6 498.8 354.5 498.8 354.4 251.8 354.4"
+         id="polygon1" />
+    </clipPath>
+    <linearGradient
+       id="linear-gradient"
+       x1="-51.7"
+       y1="924.8"
+       x2="-47.3"
+       y2="924.8"
+       gradientTransform="translate(-5481.1 109924.9) rotate(-180) scale(118.3)"
+       gradientUnits="userSpaceOnUse">
+      <stop
+         offset="0"
+         stop-color="#008dff"
+         id="stop1" />
+      <stop
+         offset="0"
+         stop-color="#008dff"
+         id="stop2" />
+      <stop
+         offset=".9"
+         stop-color="#44f2ab"
+         id="stop3" />
+      <stop
+         offset="1"
+         stop-color="#44f2ab"
+         id="stop4" />
+    </linearGradient>
+  </defs>
+  <g
+     class="st3"
+     clip-path="url(#clippath)"
+     id="g4">
+    <rect
+       class="st2"
+       x="115.2"
+       y="277.5"
+       width="520"
+       height="520"
+       transform="translate(-270.2 422.7) rotate(-45)"
+       id="rect4" />
+  </g>
+  <path
+     class="st1"
+     d="M836,596.8l28.1-1.8v3.3c0,6.4-2.7,11.7-8.1,15.9-5.4,4.2-11.7,6.3-18.8,6.3s-7.7-1.1-10.4-3.2c-2.7-2.1-4-5-4-8.5s1.2-6.4,3.6-8.4c2.4-2.1,5.6-3.2,9.6-3.5M863.8,629.7v11.3h25.7v-65.7c0-11.1-4.2-21-12.6-29.8-8.4-8.8-20.2-13.2-35.2-13.2s-21,2.7-28.6,8.1c-7.5,5.4-13.1,12.3-16.6,20.6l20.5,10.5c1.5-4.2,4.2-8,8-11.3,3.8-3.3,9.2-4.9,16-4.9s12.4,1.9,16.5,5.6c4.2,3.8,6.3,7.8,6.3,12v1l-29.4,1.9c-11.9.7-21.2,4-27.7,10.1-6.6,6-9.9,14-9.9,23.8s3.5,17.9,10.5,24c7,6.2,15.7,9.2,26.3,9.2s24.4-4.4,30.2-13.4M779.9,641v-24.7h-26.7v-58.8h26.3v-23.4h-26.3v-26.3h-25.1v26.3h-18.7v23.4h18.1v83.4h52.4ZM665,513c3.2,3.2,7.3,4.7,12.2,4.7s8.8-1.6,12.1-4.7c3.3-3.1,4.9-7.1,4.9-11.9s-1.6-9-4.8-12.1c-3.2-3.1-7.3-4.7-12.2-4.7s-9,1.6-12.2,4.7c-3.2,3.2-4.8,7.2-4.8,12.1s1.6,8.8,4.8,11.9M690.2,534.2h-25.7v106.8h25.7v-106.8ZM616.8,641v-83.4h25.9v-23.4h-25.9v-22.2h20.8v-23h-46v45.2h-17.7v23.4h17.3v83.4h25.7Z"
+     id="path4" />
+</svg>

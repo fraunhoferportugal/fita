@@ -1,0 +1,18 @@
+{
+    "uid": "be4g2gr4tkk5cb",
+    "name": "telegraf",
+    "type": "influxdb",
+    "access": "proxy",
+    "url": "http://fita-tig-influxdb2",
+    "basicAuth": true,
+    "isDefault": true,
+    "jsonData": {
+      "defaultBucket": "default",
+      "httpMode": "POST",
+      "organization": "influxdata",
+      "version": "Flux"
+    },
+    "secureJsonData": {
+        "token": "<>"
+    }
+}

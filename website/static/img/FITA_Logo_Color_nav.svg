@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   id="Layer_1"
+   version="1.1"
+   viewBox="0 0 750 400"
+   sodipodi:docname="FITA_Logo_Color_nav.svg"
+   inkscape:version="1.4.3 (0d15f75042, 2025-12-25)"
+   width="750"
+   height="400"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview4"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="1.0768519"
+     inkscape:cx="540.46429"
+     inkscape:cy="391.41873"
+     inkscape:window-width="2560"
+     inkscape:window-height="1371"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="Layer_1" />
+  <!-- Generator: Adobe Illustrator 30.0.0, SVG Export Plug-In . SVG Version: 2.1.1 Build 123)  -->
+  <defs
+     id="defs4">
+    <style
+       id="style1">
+      .st0 {
+        fill: none;
+      }
+
+      .st1 {
+        fill: #00004d;
+      }
+
+      .st2 {
+        fill: url(#linear-gradient);
+      }
+
+      .st3 {
+        clip-path: url(#clippath);
+      }
+    </style>
+    <clipPath
+       id="clippath">
+      <polygon
+         class="st0"
+         points="190.7,659.6 251.8,720.6 312.8,659.6 252.1,598.8 375.1,598.8 375.2,598.9 436.2,537.9 375.2,476.9 375.2,476.7 498.8,476.7 498.8,476.6 559.8,415.6 498.8,354.5 498.8,354.4 251.8,354.4 251.8,354.7 251.6,354.5 190.6,415.6 251.6,476.6 251.8,476.4 251.8,476.6 251.8,476.7 251.8,477.1 251.6,476.9 190.6,537.9 251.5,598.8 "
+         id="polygon1" />
+    </clipPath>
+    <linearGradient
+       id="linear-gradient"
+       x1="-51.700001"
+       y1="924.79999"
+       x2="-47.299999"
+       y2="924.79999"
+       gradientTransform="matrix(-118.3,0,0,-118.3,-5481.1,109924.9)"
+       gradientUnits="userSpaceOnUse">
+      <stop
+         offset="0"
+         stop-color="#008dff"
+         id="stop1" />
+      <stop
+         offset="0"
+         stop-color="#008dff"
+         id="stop2" />
+      <stop
+         offset=".9"
+         stop-color="#44f2ab"
+         id="stop3" />
+      <stop
+         offset="1"
+         stop-color="#44f2ab"
+         id="stop4" />
+    </linearGradient>
+  </defs>
+  <g
+     class="st3"
+     clip-path="url(#clippath)"
+     id="g4"
+     transform="translate(-165.05,-337.5)">
+    <rect
+       class="st2"
+       x="115.2"
+       y="277.5"
+       width="520"
+       height="520"
+       transform="rotate(-45,375.14404,537.51025)"
+       id="rect4"
+       style="fill:url(#linear-gradient)" />
+  </g>
+  <path
+     class="st1"
+     d="m 670.95,259.3 28.1,-1.8 v 3.3 c 0,6.4 -2.7,11.7 -8.1,15.9 -5.4,4.2 -11.7,6.3 -18.8,6.3 -7.1,0 -7.7,-1.1 -10.4,-3.2 -2.7,-2.1 -4,-5 -4,-8.5 0,-3.5 1.2,-6.4 3.6,-8.4 2.4,-2.1 5.6,-3.2 9.6,-3.5 m 27.8,32.8 v 11.3 h 25.7 v -65.7 c 0,-11.1 -4.2,-21 -12.6,-29.8 -8.4,-8.8 -20.2,-13.2 -35.2,-13.2 -15,0 -21,2.7 -28.6,8.1 -7.5,5.4 -13.1,12.3 -16.6,20.6 l 20.5,10.5 c 1.5,-4.2 4.2,-8 8,-11.3 3.8,-3.3 9.2,-4.9 16,-4.9 6.8,0 12.4,1.9 16.5,5.6 4.2,3.8 6.3,7.8 6.3,12 v 1 l -29.4,1.9 c -11.9,0.7 -21.2,4 -27.7,10.1 -6.6,6 -9.9,14 -9.9,23.8 0,9.8 3.5,17.9 10.5,24 7,6.2 15.7,9.2 26.3,9.2 10.6,0 24.4,-4.4 30.2,-13.4 m -83.9,11.5 v -24.7 h -26.7 V 220 h 26.3 v -23.4 h -26.3 v -26.3 h -25.1 v 26.3 h -18.7 V 220 h 18.1 v 83.4 h 52.4 z m -114.9,-128 c 3.2,3.2 7.3,4.7 12.2,4.7 4.9,0 8.8,-1.6 12.1,-4.7 3.3,-3.1 4.9,-7.1 4.9,-11.9 0,-4.8 -1.6,-9 -4.8,-12.1 -3.2,-3.1 -7.3,-4.7 -12.2,-4.7 -4.9,0 -9,1.6 -12.2,4.7 -3.2,3.2 -4.8,7.2 -4.8,12.1 0,4.9 1.6,8.8 4.8,11.9 m 25.2,21.2 h -25.7 v 106.8 h 25.7 z m -73.4,106.8 v -83.4 h 25.9 v -23.4 h -25.9 v -22.2 h 20.8 v -23 h -46 v 45.2 h -17.7 v 23.4 h 17.3 v 83.4 h 25.7 z"
+     id="path4" />
+</svg>

@@ -1,0 +1,15 @@
+{
+    "uid": "ee4g2jl9km2v4d",
+    "orgId": 1,
+    "name": "prometheus",
+    "type": "prometheus",
+    "access": "proxy",
+    "url": "http://fita-metrics-kube-promethe-prometheus:9090",
+    "user": "",
+    "database": "",
+    "basicAuth": false,
+    "isDefault": false,
+    "jsonData": {
+      "httpMethod": "POST"
+    }
+}
