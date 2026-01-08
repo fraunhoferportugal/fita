@@ -37,7 +37,8 @@ export default function Home() {
         <div className="container">
           <Heading as="h2">What is FITA?</Heading>
           <p className={styles.lead}>
-            FITA (Far-edge IoT device mAnagement) is a framework that integrates Far-edge IoT device in Kubernetes, allowing them to be part of the Kubernetes orchestration and lifecycle monitoring procedures.
+            <span style={{ fontWeight: 600 }}>FITA</span> (Far-edge IoT device mAnagement) is a framework that <span style={{ fontWeight: 600 }}>integrates Far-edge IoT device in Kubernetes</span>, allowing them to be part of the Kubernetes orchestration and lifecycle monitoring procedures.
+            <span style={{ fontWeight: 600 }}>Far-edge IoT devices</span> in the context of FITA are the <span style={{ fontWeight: 600 }}>devices equipped with sensors and actuators</span> that sense and act in the environment in which they are installed. Additionally, these devices are composed of microcontrollers, which <span style={{ fontWeight: 600 }}>do not have enough resources to run the Kubernetes Kubelet</span>.
           </p>
         </div>
       </section>

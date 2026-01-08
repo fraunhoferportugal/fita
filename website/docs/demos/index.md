@@ -4,10 +4,10 @@ sidebar_position: 1
 
 # Introduction
 
-We have prepared some [FITA Demos](https://github.com/fraunhoferportugal/fita-demos.git) that can be easily deployed in your Kubernetes cluster while providing interactive examples of FITA in action. Therefore, you can use these demos to experiment the main FITA features.
+We have prepared some [FITA Demos](https://github.com/fraunhoferportugal/fita/tree/docs/main/demos) that can be easily deployed in your Kubernetes cluster while providing interactive examples of FITA in action. Therefore, you can use these demos to experiment the main FITA features.
 
 ```shell
-git clone https://github.com/fraunhoferportugal/fita-demos.git
+git clone https://github.com/fraunhoferportugal/fita.git
 ```
 
 Before diving into the example demos, you should make sure that you have all the required frameworks and tools, which are listed in the [requirements](#requirements) section.
