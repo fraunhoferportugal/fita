@@ -1,54 +1,90 @@
-import type {ReactNode} from 'react';
+import React from 'react';
 import clsx from 'clsx';
 import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
-import HomepageFeatures from '@site/src/components/HomepageFeatures';
 import Heading from '@theme/Heading';
 
 import styles from './index.module.css';
 
-function HomepageHeader() {
-  const {siteConfig} = useDocusaurusContext();
-  return (
-    <header className={clsx('hero hero--primary', styles.heroBanner)}>
-      <div className="container">
-        <Heading as="h1" className="hero__title">
-          {siteConfig.title}
-        </Heading>
-        <p className="hero__subtitle">{siteConfig.tagline}</p>
-        <div className={styles.buttons} style={{ gap: '2rem' }}>
-          <Link
-            className="button button--secondary button--lg"
-            to="/fita/docs">
-            About FITA
-          </Link>
-          <Link
-            className="button button--secondary button--lg"
-            to="/fita/docs/getting-started/intro">
-            FITA Getting Started
-          </Link>
-          <Link
-            className="button button--secondary button--lg"
-            to="/fita/demos">
-            FITA Demos
-          </Link>
-        </div>
-      </div>
-    </header>
-  );
-}
-
-export default function Home(): ReactNode {
-  const {siteConfig} = useDocusaurusContext();
+export default function Home() {
+  const { siteConfig } = useDocusaurusContext();
   return (
     <Layout
-      title={`Hello from ${siteConfig.title}`}
-      description="Description will go into a meta tag in <head />">
-      <HomepageHeader />
-      <main>
-        <HomepageFeatures />
-      </main>
+      title={siteConfig.title}
+      description="FITA - Flexible Intelligent Test Automation framework.">
+
+      {/* Hero */}
+      <section className={clsx(styles.hero, 'hero')}>
+        <div className="container">
+          <Heading as="h1" className="hero__title">
+            {siteConfig.title}
+          </Heading>
+          <p className="hero__subtitle">{siteConfig.tagline}</p>
+
+          <div className={styles.heroButtons}>
+            <Link className="button button--lg button--primary" to="/fita/docs/getting-started/intro">
+              Get Started
+            </Link>
+            <Link className="button button--secondary button--lg" to="/fita/demos">
+              Explore Demos
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      <section className={styles.section}>
+        <div className="container">
+          <Heading as="h2">What is FITA?</Heading>
+          <p className={styles.lead}>
+            FITA (Far-edge IoT device mAnagement) is a framework that integrates Far-edge IoT device in Kubernetes, allowing them to be part of the Kubernetes orchestration and lifecycle monitoring procedures.
+          </p>
+        </div>
+      </section>
+
+      <section className={clsx(styles.section, styles.cards)}>
+        <div className="container">
+          <div className="row">
+            <div className="col col--4">
+              <div className={styles.card}>
+                <h3>Heterogeneity Management & Monitoring</h3>
+                <p>
+                  Automatically discover, monitor, and manage diverse Far-edge devices.
+                </p>
+              </div>
+            </div>
+            <div className="col col--4">
+              <div className={styles.card}>
+                <h3>Dynamic Edge Workloads</h3>
+                <p>
+                  Dynamically deploy and reconfigure workloads on Far-edge devices using standard Kubernetes definitions, powered by flexible runtimes such as embServe.
+                </p>
+              </div>
+            </div>
+            <div className="col col--4">
+              <div className={styles.card}>
+                <h3>Seamless Far-Edge and Kubernetes Integration</h3>
+                <p>
+                  Connect Far-edge devices to Kubernetes as virtual nodes for unified orchestration.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className={styles.sectionAlt}>
+      </section>
+
+      <section className={styles.sectionCTA}>
+        <div className="container text--center">
+          <Heading as="h2">Ready to Try FITA?</Heading>
+          <Link className="button button--primary button--lg" to="/fita/docs/getting-started/intro">
+            Start with the Docs
+          </Link>
+        </div>
+      </section>
+
     </Layout>
   );
 }

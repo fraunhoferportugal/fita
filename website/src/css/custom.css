@@ -5,30 +5,90 @@
  */
 
 /* You can override the default Infima variables here. */
+.markdown .md-svg {
+  max-width: 100%;   /* never overflow container */
+  height: auto;      /* maintain aspect ratio */
+  display: block;    /* remove inline spacing issues */
+  margin: 1rem 0;    /* optional vertical spacing */
+}
+
 :root {
-  --ifm-color-primary: #2e8555;
-  --ifm-color-primary-dark: #29784c;
-  --ifm-color-primary-darker: #277148;
-  --ifm-color-primary-darkest: #205d3b;
-  --ifm-color-primary-light: #33925d;
-  --ifm-color-primary-lighter: #359962;
-  --ifm-color-primary-lightest: #3cad6e;
+  --brand-green: 68, 242, 171;
+  --brand-blue: 0, 141, 255;
+  --brand-dark-blue: 29, 29, 27;
+
+  /* Light theme backgrounds */
+  --bg-main: #f5f6f7;
+  --bg-navbar: #f0f1f2;
+  --bg-sidebar: #ededee;
+  --bg-card: #ffffff;
+
+  /* Text */
+  --text-primary: #1c1e21;
+  --text-secondary: #5c5f66;
+  --text-primary-contrast: #f5f5f5;
+
+
+  --ifm-color-primary-darkest:  #004d99;
+  --ifm-color-primary-darker:   #0066cc;
+  --ifm-color-primary-dark:     #007acc;
+  --ifm-color-primary:          #008dff;
+  --ifm-color-primary-light:    #339eff;
+  --ifm-color-primary-lighter:  #66b3ff;
+  --ifm-color-primary-lightest: #99ccff;
+
+  --ifm-background-color: var(--bg-main);        /* main page background */
+  --ifm-navbar-background-color: var(--bg-navbar); /* navbar */
+  --ifm-footer-background-color: var(--bg-navbar); /* footer */
+  --ifm-menu-color-background-active: rgba(var(--brand-blue), 0.12); /* sidebar highlight */
+
+  /* Code styling */
   --ifm-code-font-size: 95%;
-  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+
+  /* Content */
+  --ifm-color-content: var(--text-primary);
+  --ifm-color-content-secondary: var(--text-secondary);
+
 }
 
-/* For readability concerns, you should choose a lighter palette in dark mode. */
-[data-theme='dark'] {
-  --ifm-color-primary: #25c2a0;
-  --ifm-color-primary-dark: #21af90;
-  --ifm-color-primary-darker: #1fa588;
-  --ifm-color-primary-darkest: #1a8870;
-  --ifm-color-primary-light: #29d5b0;
-  --ifm-color-primary-lighter: #32d8b4;
-  --ifm-color-primary-lightest: #4fddbf;
-  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
-}
 
+html[data-theme='dark'] {
+  --brand-green: 68, 242, 171;
+  
+  /* Adjusted primary color gradient for dark mode */
+  --ifm-color-primary-darkest:  #3bbf8b;
+  --ifm-color-primary-darker:   #47c995;
+  --ifm-color-primary-dark:     #52d2a0;
+  --ifm-color-primary:          #68f2ab;  /* base primary, lighter green */
+  --ifm-color-primary-light:    #7af9b7;
+  --ifm-color-primary-lighter:  #8dfdc3;
+  --ifm-color-primary-lightest: #a0ffe0;
+
+  /* Dark theme backgrounds */
+  --bg-main: #1d1d1b;        /* main page background */
+  --bg-navbar: #1f1f1d;      /* navbar */
+  --bg-sidebar: #1a1a18;     /* sidebar */
+  --bg-card: #242422;        /* cards, panels */
+
+  /* Text colors */
+  --text-primary: #f5f5f5;
+  --text-secondary: #b8b8b8;
+  --text-on-hero: #1c1e21;
+
+
+  /* Infima overrides */
+  --ifm-background-color: var(--bg-main);
+  --ifm-navbar-background-color: var(--bg-navbar);
+  --ifm-footer-background-color: var(--bg-navbar);
+  --ifm-menu-color-background-active: rgba(var(--brand-green), 0.2); /* sidebar highlight */
+  
+  /* Code blocks */
+  --ifm-code-font-size: 95%;
+
+  /* Content */
+  --ifm-color-content: var(--text-primary);
+  --ifm-color-content-secondary: var(--text-secondary);
+}
 
 .header-github-link::before {
   content: '';
