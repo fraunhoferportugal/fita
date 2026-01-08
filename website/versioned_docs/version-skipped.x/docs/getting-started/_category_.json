@@ -1,0 +1,10 @@
+{
+  "position": 2,
+  "collapsible": true,
+  "collapsed": false,
+  "label": "Getting Started with FITA",
+  "link": {
+    "type": "doc",
+    "id": "intro"
+  }
+}

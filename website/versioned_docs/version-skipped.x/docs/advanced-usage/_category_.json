@@ -1,0 +1,12 @@
+{
+  "position": 3,
+  "collapsible": true,
+  "collapsed": false,
+  "label": "Advanced Usage",
+  "link": {
+    "type": "generated-index",
+    "title": "Advanced Usage",
+    "slug": "advanced-usage",
+    "description": "Using FITA advanced features."
+  }
+}
