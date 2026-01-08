@@ -104,7 +104,7 @@ mkdir ~/.iotnetemu
 
 - Create the IoTNetEMU Docker container:
 ```shell
-docker container create --name iotnetemu --network host --privileged -v /dev/pts/:/dev/pts/ -v ~/.iotnetemu:/iotnetemu/workspace -it harbor.nbfc.io/mlsysops/iotnetemu:1.0.1
+docker container create --name iotnetemu --network host --privileged -v /dev/pts/:/dev/pts/ -v ~/.iotnetemu:/iotnetemu/workspace -it ghcr.io/fraunhoferportugal/fita/components/iotnetemu
 ```
 
 - Start the container:
