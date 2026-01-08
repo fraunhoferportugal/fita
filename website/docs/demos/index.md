@@ -30,16 +30,9 @@ After installing and preparing all the requirements, you are finally able to eas
 Here you can find a simple description for each available demo:
 
 - [Temperature Monitoring Demo](#temperature-monitoring-demo)
-- [Intelligent Traffic Control Demo](#intelligent-traffic-control-demo)
 
 ### Temperature Monitoring Demo
 
 This demonstrator showcases FITA by presenting a temperature monitoring setup using two (emulated) Far-Edge nodes built on top of a Kubernetes cluster. A custom component is deployed across the cluster to collect temperature data from the Far-Edge nodes. FITA is the core component of this demonstrator as it is responsible of enabling the connectivity to the Far-Edge devices and allowing the data collection. The goal of this demo is the simulation of a real-world monitoring scenario that collects environment metrics.
 
 [Try Demo 🚀](./temperature-monitoring-demo.mdx)
-
-### Intelligent Traffic Control Demo
-
-This demonstrator showcases a traffic monitoring system on a Kubernetes cluster equipped with a device featuring a noise sensor and a camera. The captured video is transmitted to a web-based streaming application, making it easily accessible for real-time monitoring. Similarly to the [Temperature Monitoring Demo](#temperature-monitoring-demo), FITA enables a custom component to collect noise data and visualize it in Grafana dashboards. To enable traffic image processing, when the noise surpasses a predefined threshold, the system triggers an AI model that processes the collected images for object detection. In a real-world scenario, this approach increases the energy efficiency by limiting image processing to noisy situations while enabling real-time traffic monitoring.
-
-[Try Demo 🚀](./intelligent-traffic-control-demo.mdx)
