@@ -76,7 +76,7 @@ kubectl create namespace fita
 ```
 2. Deploy FITA to the ```fita``` namespace
 ```shell
-microk8s helm install fita oci://harbor.nbfc.io/mlsysops/fita --version 0.2.0 -n fita
+microk8s helm install fita oci://ghcr.io/fraunhoferportugal/fita --version 0.1.0 -n fita
 ```
 3. Wait for all container images to be deployed
 4. Validate that the FITA pod is running correctly
