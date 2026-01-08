@@ -1,7 +1,3 @@
----
-label: "What is it?"
----
-
 # IoTNetEMU Configurations
 
 ## Nodes
@@ -10,7 +6,7 @@ In IoTNetEMU, Nodes refer IoT nodes that connect to Networks and communicate wit
 
 To configure a Node, the configuration file shall define a node, ```node1```:
 
-```shell
+```yaml
 nodes:
   node1:
     type: 'zephyr'
@@ -37,7 +33,7 @@ Applications define IoT workloads deployed in a gateway or cloud server. This co
 
 The configuration block for a native application is:
 
-```shell
+```yaml
 applications:
   proxy:
     type: 'native'
@@ -49,7 +45,7 @@ applications:
 
 For a Docker based workload the configuration is:
 
-```shell
+```yaml
 applications:
   leshan-server:
     type: 'docker'
@@ -71,7 +67,7 @@ Networks define the communication linkes that connect Nodes to Nodes, Nodes to A
 
 To define a network:
 
-```shell
+```yaml
 networks:
   linux-br:
     type: 'linux-br'
@@ -83,7 +79,7 @@ networks:
 
 Each Node and Application that must be connected to the Linux Bridge must provide some information to ensure correct configuration:
 
-```shell
+```yaml
 nodes:
   node1:
     (...)

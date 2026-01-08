@@ -31,7 +31,7 @@ touch ~/.iotnetemu/fita-scenario/config.yaml
 ```
 
 5. Add the following to to ```config.yaml```:
-```shell
+```yaml
 nodes:
   node1:
     type: 'zephyr'
@@ -60,7 +60,7 @@ networks:
 ```
 
 6. If IoTNetEMU is running in a different host machine, add an additional application to redirect the traffic to the correct server. Do not forget to replace ```<IP ADDRESS>``` by the address of the node running FITA:
-```shell
+```yaml
 applications:
   proxy:
     type: 'native'

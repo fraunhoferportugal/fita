@@ -1,23 +1,84 @@
-/**
- * CSS files with the .module.css suffix will be treated as CSS modules
- * and scoped locally.
- */
-
-.heroBanner {
-  padding: 4rem 0;
+.hero {
+  padding: 5rem 0;
   text-align: center;
-  position: relative;
-  overflow: hidden;
+
+  background: linear-gradient(135deg,
+      color-mix(in srgb, var(--ifm-color-primary) 70%, white),
+      color-mix(in srgb, var(--ifm-color-primary-lightest) 70%, white));
+
+  color: var(--text-primary);
 }
 
-@media screen and (max-width: 996px) {
-  .heroBanner {
-    padding: 2rem;
-  }
+html[data-theme='dark'] .hero {
+  background: linear-gradient(135deg,
+      color-mix(in srgb, rgba(52, 190, 140, 0.9) 100%, white),
+      color-mix(in srgb, rgba(68, 242, 171, 0.9) 80%, white));
 }
 
-.buttons {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.hero__title {
+  font-size: 3.2rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+
+.heroButtons>a {
+  margin: 0 0.5rem;
+}
+
+.section {
+  padding: 4rem 0 0 0;
+}
+
+.sectionAlt {
+  background-color: var(--ifm-background-color);
+  padding: 4rem 0;
+}
+
+.section .container h2 {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.section .container p.lead {
+  text-align: center;
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.cards .card {
+  background: var(--ifm-card-background-color, #fff);
+  padding: 1.6rem;
+  border-radius: 8px;
+  box-shadow: var(--ifm-shadow-level-1);
+  transition: transform 0.2s ease;
+  height: 100%;
+}
+
+.cards .card:hover {
+  transform: translateY(-4px);
+}
+
+.cards .card h3 {
+  margin-top: 0;
+  font-weight: bold;
+  color: var(--ifm-color-primary);
+}
+
+.sectionCTA {
+  padding: 3rem 0;
+
+  background: color-mix(in srgb,
+      var(--ifm-color-primary-lightest) 90%,
+      white);
+
+  color: var(--text-primary);
+}
+
+html[data-theme='dark'] .sectionCTA {
+  background: color-mix(in srgb, rgba(52, 190, 140, 0.9) 80%, white);
+  color: var(--text-primary);
 }

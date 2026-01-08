@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "simple-sensor-data-collector.fullname" . }}
+  labels:
+    app: {{ template "simple-sensor-data-collector.name" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ template "simple-sensor-data-collector.name" . }}
+  template:
+    metadata:
+      labels:
+        app: {{ template "simple-sensor-data-collector.name" . }}
+        release: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: simple-sensor-data-collector
+          image: "{{ .Values.TemperatureSensorDataImage.repository }}:{{ .Values.TemperatureSensorDataImage.tag }}"
+          imagePullPolicy: {{ .Values.TemperatureSensorDataImage.pullPolicy }}
+          command: [ "python3", "-u", "main.py", {{ .Values.TemperatureSensorDataImage.mqttUrl | quote }}, {{ .Values.TemperatureSensorDataImage.mqttPort | quote }}, {{ .Values.TemperatureSensorDataImage.mqttClientId | quote }}, {{ .Values.TemperatureSensorDataImage.telegrafUrl | quote }}, {{ .Values.TemperatureSensorDataImage.telegrafPort | quote }} ]

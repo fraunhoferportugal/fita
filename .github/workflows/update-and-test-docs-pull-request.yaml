@@ -8,12 +8,17 @@ on:
     paths:
       - website/**
 
+permissions:
+  contents: read
+
 jobs:
   auto-update-docs:
     runs-on: ubuntu-latest
     if: github.event.pull_request.base.ref == 'main'
     permissions:
       contents: write
+      pull-requests: write
+
     outputs:
       new-tag: ${{ steps.tag.outputs.new-tag }}
     steps:
@@ -69,6 +74,7 @@ jobs:
         run: ./.github/scripts/compute-tag.sh
 
       - name: Update Documentation
+        if: steps.tag.outputs.new-tag != 'skipped'
         env:
           GH_TOKEN: ${{ github.token }}
           NEW_TAG: ${{ steps.tag.outputs.new-tag }}

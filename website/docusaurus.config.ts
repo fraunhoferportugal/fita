@@ -7,7 +7,7 @@ import type * as Preset from '@docusaurus/preset-classic';
 const config: Config = {
   title: 'FITA',
   tagline: 'Far-Edge IoT Device Management',
-  favicon: 'img/tape.ico',
+  favicon: 'img/favicon.ico',
 
   // Future flags, see https://docusaurus.io/docs/api/docusaurus-config#future
   future: {
@@ -81,10 +81,10 @@ const config: Config = {
     // Replace with your project's social card
     image: 'img/docusaurus-social-card.jpg',
     navbar: {
-      title: 'FITA',
       logo: {
         alt: 'FITA Logo',
-        src: 'img/tape.svg',
+        src: 'img/FITA_Logo_Color_nav.svg',
+        srcDark: 'img/FITA_Logo_White_nav.svg',
       },
       items: [
         {
@@ -97,7 +97,7 @@ const config: Config = {
           sidebarId: 'demos',
           label: 'Demos',
         },
-        { to: '/blog', label: 'Blog', position: 'left' },
+        // { to: '/blog', label: 'Blog', position: 'left' },
         {
           type: 'docsVersionDropdown',
           position: 'right',
@@ -111,44 +111,13 @@ const config: Config = {
       ],
     },
     footer: {
-      style: 'dark',
-      links: [
-        {
-          title: 'Documentation',
-          items: [
-            {
-              label: 'FITA',
-              to: '/fita/docs',
-            }
-          ],
-        },
-        {
-          title: 'Demonstrators',
-          items: [
-            {
-              label: 'Temperature Monitoring',
-              to: '/fita/demos/temperature-monitoring-demo',
-            },
-            {
-              label: 'Intelligent Traffic Control',
-              to: '/fita/demos/intelligent-traffic-control-demo',
-            },
-          ],
-        },
-        {
-          title: 'More',
-          items: [
-            {
-              label: 'Blog',
-              to: '/blog',
-            },
-            {
-              label: 'Github',
-              href: 'https://github.com/fraunhoferportugal/fita',
-            }
-          ],
-        },
-      ],
+      
+      logo: {
+        alt: 'FITA Logo',
+        src: 'img/FITA_Logo_Color_nav.svg',
+        srcDark: 'img/FITA_Logo_White_nav.svg',
+        height: '80px',
+      },
       copyright: `Copyright © ${new Date().getFullYear()} Fraunhofer Portugal`,
     },
     docs: {
@@ -158,7 +127,7 @@ const config: Config = {
     },
     prism: {
       theme: prismThemes.github,
-      darkTheme: prismThemes.dracula,
+      darkTheme: prismThemes.palenight,
     },
   } satisfies Preset.ThemeConfig,
 };

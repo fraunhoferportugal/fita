@@ -25,7 +25,7 @@ python3 -m pip install oras
 ```
 
 3. Create a `config.json`:
-```
+```json
 {
     "architecture": "arm",
     "os": "zephyr",
@@ -51,12 +51,17 @@ oras push harbor.nbfc.io/mlsysops/fita/services/temperature_sensor:1.0.0 --confi
 You may need to adapt the command above to match your registry. Also, you must ensure the registry matches the one configured during the FITA deployment. By default, it uses `harbor.nbfc.io`.
 :::
 
+:::tip
+If you want the same reference OCI registry reference to provide both an `embServe workload` and a `Container image`, check out the [Multi-platform Artifacts](../advanced-usage/multi-platform-images) documentation.
+:::
+
+
 ## Creating a Kubernetes deployment for a Far-Edge device
 
 Creating a deployment targeting a Far-Edge device follows the same logic as a normal Kubernetes deployment. Let's create a deployment for the service uploaded in the previous section.
 
 1. Create a file `pod.yaml` with:
-```shell
+```yaml
 apiVersion: v1
 kind: Pod
 metadata:

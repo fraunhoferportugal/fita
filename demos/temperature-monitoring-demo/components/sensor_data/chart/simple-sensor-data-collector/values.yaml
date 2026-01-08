@@ -1,0 +1,10 @@
+TemperatureSensorDataImage:
+  pullPolicy: IfNotPresent
+  repository: harbor.nbfc.io/mlsysops/fita/apps/simple-sensor-data-collector
+  tag: 0.1.0
+
+  mqttUrl: mqtt-broker
+  mqttPort: 1883
+  mqttClientId: simple-sensor-data-collector
+  telegrafUrl: fita-tig-telegraf
+  telegrafPort: 8126
