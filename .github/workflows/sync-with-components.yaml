@@ -34,7 +34,10 @@ jobs:
       - name: Fetch new submodules and commit with updated tags and Chart
         id: relsync
         run: |
-          output=$(relsync update --commit --no-backup --prerelease-identifier development --output json)
+          output=$(relsync update \
+            --commit --no-backup --prerelease-identifier development --output json\
+            --exclude-submodule demos/intelligent-traffic-control-demo/components/video_component/assets/models/darknet
+          )
           echo "$output"
 
           changed=$(echo "$output" | jq -r '.committed_changes')
