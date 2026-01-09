@@ -1,0 +1,4 @@
+name: video-component
+version: 0.1.0
+apiVersion: v2
+description: a Helm chart to deploy a the Video Component for the MLSysOps Review 

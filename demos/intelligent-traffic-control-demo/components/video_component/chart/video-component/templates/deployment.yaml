@@ -1,0 +1,89 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "video-component.fullname" . }}
+  labels:
+    app: {{ template "video-component.name" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ template "video-component.name" . }}
+  template:
+    metadata:
+      labels:
+        app: {{ template "video-component.name" . }}
+        release: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: video-component
+          image: "{{ .Values.VideoComponentImage.repository }}:{{ .Values.VideoComponentImage.tag }}"
+          imagePullPolicy: {{ .Values.VideoComponentImage.pullPolicy }}
+          command: [ "uvicorn", "main:app", "--host", "0.0.0.0", "--port", {{ .Values.VideoComponentImage.apiPort | quote }}]
+          env:
+            - name: VIDEO_SERVER_ADDRESS
+              value: "{{ template "video-component.servicename" . }}:{{ .Values.go2rtcImage.rtspPort }}"
+            - name: VIDEO_SERVER_STREAM
+              value: "{{ .Values.go2rtcImage.streamName }}"
+            - name: VIDEO_AUTOSTART
+              value: {{ .Values.VideoComponentImage.autostartVideo | default false | toString | quote }}
+            - name: VIDEO_INFERENCE
+              value: {{ .Values.VideoComponentImage.enableInference | default false | toString | quote }}
+            - name: VIDEO_INFERENCE_DEFAULT_MODEL_TYPE
+              value: {{ .Values.VideoComponentImage.inference_type | default "open_vino" | quote }}
+          resources:
+            limits:
+              gpu.intel.com/i915: 1
+
+        - name: go2rtc
+          image: "{{ .Values.go2rtcImage.repository }}:{{ .Values.go2rtcImage.tag }}"
+          imagePullPolicy: {{ .Values.go2rtcImage.pullPolicy }}
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "video-component.servicename" . }}
+spec:
+  selector:
+    app: {{ template "video-component.name" . }}
+  ports:
+    - protocol: TCP
+      port: {{ .Values.VideoComponentImage.apiPort }}
+      targetPort: {{ .Values.VideoComponentImage.apiPort }}
+      name: "video-api"
+
+    - protocol: TCP
+      port: {{ .Values.go2rtcImage.rtspPort }}
+      targetPort: {{ .Values.go2rtcImage.rtspPort }}
+      name: "go2rtc-rtsp-stream"
+
+    - protocol: TCP
+      port: {{ .Values.go2rtcImage.webrtcPort }}
+      targetPort: {{ .Values.go2rtcImage.webrtcPort }}
+      name: "go2rtc-webrtc-stream"
+
+    - protocol: TCP
+      port: {{ .Values.go2rtcImage.apiPort }}
+      targetPort: {{ .Values.go2rtcImage.apiPort }}
+      name: "go2rtc-api"
+
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "video-component.extservicename" . }}
+spec:
+  selector:
+    app: {{ template "video-component.name" . }}
+  ports:
+    - protocol: TCP
+      port: {{ .Values.go2rtcImage.apiPort }}
+      nodePort: {{ .Values.go2rtcImage.externalApiPort }}
+      name: "go2rtc-api-external"
+  type: NodePort

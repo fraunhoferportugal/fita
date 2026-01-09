@@ -1,0 +1,24 @@
+VideoComponentImage:
+  pullPolicy: IfNotPresent
+  repository: ghcr.io/fraunhoferportugal/fita/demos/intelligent-trafic-control/components/video-component
+  tag: 0.1.0
+
+  apiPort: 6013
+
+  autostartVideo: false
+  enableInference: false
+  defaultInferenceType: open_vino
+
+go2rtcImage:
+    pullPolicy: IfNotPresent
+    repository: ghcr.io/fraunhoferportugal/fita/demos/intelligent-trafic-control/components/go2rtc
+    tag: 0.1.0
+
+    streamName: mystream
+    
+    # Do not change this, hardcoded in go2rtc
+    rtspPort: 8554
+    apiPort: 1984
+    webrtcPort: 8555
+
+    externalApiPort: 30100

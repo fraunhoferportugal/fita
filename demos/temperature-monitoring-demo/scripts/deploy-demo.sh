@@ -5,7 +5,7 @@ DIR=$(cd "$(dirname "$0")" && pwd)
 EMBSERVE_ROOT_FOLDER="$DIR/../services/embserve"
 GRAFANA_ROOT_FOLDER="$DIR/../services/grafana"
 
-REGISTRY_FITA_URL="harbor.nbfc.io/mlsysops/fita"
+REGISTRY_FITA_URL="ghcr.io/fraunhoferportugal/fita"
 
 MY_IP=$(ifconfig enp86s0 | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1')
 
@@ -25,11 +25,11 @@ microk8s helm install fita oci://$REGISTRY_FITA_URL --version 0.1.0
 #   --set far-edge-connection-provisioner.image.pullPolicy=IfNotPresent
 
 # deploy tig and external grafana service
-microk8s helm install fita-tig oci://$REGISTRY_FITA_URL/tig --version 0.1.0
+microk8s helm install fita-tig oci://$REGISTRY_FITA_URL/demos/common/charts/tig --version 0.1.0
 pushd $GRAFANA_ROOT_FOLDER && microk8s kubectl apply -f ./service.yaml && popd
 
 # build and deploy sensor data image
-microk8s helm install sensor-data-collector oci://$REGISTRY_FITA_URL/charts/simple-sensor-data-collector --version 0.1.0
+microk8s helm install sensor-data-collector oci://$REGISTRY_FITA_URL/demos/temperature-monitoring/charts/simple-sensor-data-collector --version 0.1.0
 
 # deploy prometheus
 echo "Deploying Prometheus stack..."
@@ -41,7 +41,7 @@ docker container run --name embserve_nodes \
   --network host \
   -v /dev/pts/:/dev/pts/ \
   -v $EMBSERVE_ROOT_FOLDER/temperature_sensor/workspace:/workspace \
-  -d $REGISTRY_FITA_URL/iotnetemu:0.1.0 "--workspace /workspace"
+  -d $REGISTRY_FITA_URL/components/iotnetemu:0.1.0 "--workspace /workspace"
 
 # waiting for all services
 echo "Waiting for all services to be up..."

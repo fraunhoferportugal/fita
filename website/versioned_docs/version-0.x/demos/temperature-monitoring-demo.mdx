@@ -101,7 +101,6 @@ Instead of performing the [Deployment](#deployment) step by executing the deploy
 
 1. FITA deployment
     - You can also follow the [Installing FITA](/fita/docs/getting-started/intro#fita) guide
-    - **Note:** for this demo we are using an older version of FITA
 
 ```shell
 helm install fita oci://ghcr.io/fraunhoferportugal/fita --version 0.1.0
@@ -132,7 +131,12 @@ helm install fita-metrics prometheus-community/kube-prometheus-stack --set grafa
     - **Note:** do not forget to replace `<IP ADDRESS>` by the address of the node running FITA
 
 ```shell
-docker container run --name embserve_nodes --network host --privileged -v /dev/pts/:/dev/pts/ -d ghcr.io/fraunhoferportugal/fita/components/iotnetemu/embserve_nodes:latest
+docker container run --name embserve_nodes \
+  --privileged \
+  --network host \
+  -v /dev/pts/:/dev/pts/ \
+  -v ./services/embserve/temperature_sensor/workspace:/workspace \
+  -d ghcr.io/fraunhoferportugal/fita/components/iotnetemu:0.1.0 "--workspace /workspace"
 
 # wait for the initialization of all services
 sleep 5 
