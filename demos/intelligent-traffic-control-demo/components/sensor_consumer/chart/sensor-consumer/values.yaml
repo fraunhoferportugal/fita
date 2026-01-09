@@ -1,0 +1,14 @@
+SensorConsumerImage:
+  pullPolicy: IfNotPresent
+  repository: ghcr.io/fraunhoferportugal/fita/demos/intelligent-trafic-control/components/noise-sensor-consumer
+  tag: 0.1.0
+
+  mqttUrl: mqtt-broker
+  mqttPort: 1883
+  mqttClientId: sensor-consumer
+  telegrafUrl: fita-tig-telegraf
+  telegrafPort: 8126
+  videoApiUrl: video-component-video-component-services
+  videoApiPort: 6013
+  
+  setInitialVideoState: true

@@ -1,0 +1,4 @@
+name: noise-sensor-consumer
+version: 0.1.0
+apiVersion: v2
+description: a Helm chart to deploy a Telegraf data fowarder for FITA 

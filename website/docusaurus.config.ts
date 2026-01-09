@@ -7,7 +7,7 @@ import type * as Preset from '@docusaurus/preset-classic';
 const config: Config = {
   title: 'FITA',
   tagline: 'Far-Edge IoT Device Management',
-  favicon: 'img/favicon.ico',
+  favicon: 'img/icons/favicon.ico',
 
   // Future flags, see https://docusaurus.io/docs/api/docusaurus-config#future
   future: {

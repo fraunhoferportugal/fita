@@ -45,10 +45,10 @@ drwxrwxr-x 8 user user 4096 Sep 26 13:15 ..
 
 5. Upload the device to an OCI registry:
 ```shell
-oras push harbor.nbfc.io/mlsysops/fita/services/temperature_sensor:1.0.0 --config config.json:application/vnd.oci.image.config.v1+json service.json:application/vnd.embserve.v1+json 
+oras push <https://your-image-registry.example.com>/temperature_sensor:1.0.0 --config config.json:application/vnd.oci.image.config.v1+json service.json:application/vnd.embserve.v1+json
 ```
 :::note
-You may need to adapt the command above to match your registry. Also, you must ensure the registry matches the one configured during the FITA deployment. By default, it uses `harbor.nbfc.io`.
+Don't forget to replace with your registry.
 :::
 
 :::tip
@@ -69,7 +69,7 @@ metadata:
 spec:
   containers:
   - name: temperature
-    image: mlsysops/fita/services/temperature_sensor:1.0.0
+    image: <your-image-registry.example.com>/temperature_sensor:1.0.0
     imagePullPolicy: IfNotPresent
   nodeSelector:
     extra.resources.fhp/embserve: "true"

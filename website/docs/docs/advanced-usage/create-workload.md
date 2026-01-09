@@ -9,7 +9,7 @@ Services to be deployed in Far-Edge devices powered by embServe can be generated
 
 The SDK includes everything needed to generate embServe-compliant files. To setup the SDK:
 
-1. Download the SDK bundle from [here](pathname:///res/iotnetemu/images/embservesdk-1.0.2-e4c86f8@afe44f089b7.zip)
+1. Download the SDK bundle from [here](/res/embserve/embservesdk-1.0.2-e4c86f8@afe44f089b7.zip)
 
 2. Unzip file
 ```shell

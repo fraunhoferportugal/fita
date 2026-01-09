@@ -1,0 +1,12 @@
+streams:
+  mystream:
+    - "ffmpeg:mystream#video=h264"
+
+log:
+  level: debug  # default level
+  api: debug
+  exec: debug
+  ngrok: debug
+  rtsp: debug
+  streams: debug
+  webrtc: debug

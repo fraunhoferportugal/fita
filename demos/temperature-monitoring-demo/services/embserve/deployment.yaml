@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: temperature
-        image: mlsysops/fita/services/temperature_sensor:0.1.0
+        image: ghcr.io/fraunhoferportugal/fita/demos/temperature-monitoring/services/temperature_sensor:0.1.0
         imagePullPolicy: Always
       nodeSelector:
         extra.resources.fhp/embserve: "true"

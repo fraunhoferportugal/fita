@@ -1,6 +1,6 @@
 TemperatureSensorDataImage:
   pullPolicy: IfNotPresent
-  repository: harbor.nbfc.io/mlsysops/fita/apps/simple-sensor-data-collector
+  repository: ghcr.io/fraunhoferportugal/fita/demos/temperature-monitoring/components/simple-sensor-data-collector
   tag: 0.1.0
 
   mqttUrl: mqtt-broker

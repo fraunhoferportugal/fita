@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "sensor-consumer.fullname" . }}
+  labels:
+    app: {{ template "sensor-consumer.name" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ template "sensor-consumer.name" . }}
+  template:
+    metadata:
+      labels:
+        app: {{ template "sensor-consumer.name" . }}
+        release: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: noise-sensor-consumer
+          image: "{{ .Values.SensorConsumerImage.repository }}:{{ .Values.SensorConsumerImage.tag }}"
+          imagePullPolicy: {{ .Values.SensorConsumerImage.pullPolicy }}
+          command: [ "python3", "-u", "main.py", 
+            {{ .Values.SensorConsumerImage.mqttUrl | quote }}, 
+            {{ .Values.SensorConsumerImage.mqttPort | quote }},
+            {{ .Values.SensorConsumerImage.telegrafUrl | quote }}, 
+            {{ .Values.SensorConsumerImage.telegrafPort | quote }}, 
+            {{ .Values.SensorConsumerImage.videoApiUrl | quote }}, 
+            {{ .Values.SensorConsumerImage.videoApiPort | quote }} ]
+          env:
+            - name: SET_INITIAL_VDEO_STATE
+              value: {{ ternary .Values.SensorConsumerImage.setInitialVideoState true (hasKey .Values.SensorConsumerImage "setInitialVideoState") | toString | quote }}

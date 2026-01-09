@@ -1,7 +1,6 @@
 ---
-label: "What is it?"
+sidebar_position: 1
 ---
-
 # Create embServe Workload
 
 Services to be deployed in Far-Edge devices powered by embServe can be generated using C code. For that, an SDK is provided by embServe, which services must use to ensure compatibility. This page details a simple example showing how this process works.
@@ -10,7 +9,7 @@ Services to be deployed in Far-Edge devices powered by embServe can be generated
 
 The SDK includes everything needed to generate embServe-compliant files. To setup the SDK:
 
-1. Download the SDK bundle from [here](pathname:///res/iotnetemu/images/embservesdk-1.0.2-e4c86f8@afe44f089b7.zip)
+1. Download the SDK bundle from [here](/res/embserve/embservesdk-1.0.2-e4c86f8@afe44f089b7.zip)
 
 2. Unzip file
 ```shell
@@ -61,7 +60,7 @@ mkdir service
 
 2. Create the file service.c in the `embserve-sdk/` folder with the following:
 
-```shell
+```c
 #include "../include/embserve.h"
 #include <string.h>
 #include <stdio.h>
@@ -143,11 +142,11 @@ base64 temperature_sensor.bin -w 0
 
 5. Create the JSON manifest, `service.json`. Replace `<service binary in base64>` with the output of the previous command :
 
-```shell
+```json
 {
     "name": "temperature_sensor",
     "version": 1,
-    "service": <service binary in base64>
+    "service": <service binary in base64>,
     "dependencies": {
         "sdk_api": 1
     },

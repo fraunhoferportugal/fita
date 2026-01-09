@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: noise-deployment
+  labels:
+    app: noise
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: noise
+  template:
+    metadata:
+      labels:
+        app: noise
+    spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - noise
+            topologyKey: "kubernetes.io/hostname"
+      containers:
+      - name: noise
+        image: ghcr.io/fraunhoferportugal/fita/demos/intelligent-traffic-control/services/noise_sensor:0.1.0
+        imagePullPolicy: Always
+      nodeSelector:
+        extra.resources.fhp/embserve: "true"
+      tolerations:
+      - key: "fita.fhp.pt/type"
+        operator: "Equal"
+        value: "far-edge"
+        effect: "NoSchedule"

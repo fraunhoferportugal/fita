@@ -74,6 +74,7 @@ jobs:
         run: ./.github/scripts/compute-tag.sh
 
       - name: Update Documentation
+        if: steps.tag.outputs.new-tag != 'skipped'
         env:
           GH_TOKEN: ${{ github.token }}
           NEW_TAG: ${{ steps.tag.outputs.new-tag }}

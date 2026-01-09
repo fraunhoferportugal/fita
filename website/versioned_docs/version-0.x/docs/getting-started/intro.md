@@ -76,7 +76,7 @@ kubectl create namespace fita
 ```
 2. Deploy FITA to the ```fita``` namespace
 ```shell
-microk8s helm install fita oci://harbor.nbfc.io/mlsysops/fita --version 0.2.0 -n fita
+microk8s helm install fita oci://ghcr.io/fraunhoferportugal/fita --version 0.1.0 -n fita
 ```
 3. Wait for all container images to be deployed
 4. Validate that the FITA pod is running correctly
@@ -104,7 +104,7 @@ mkdir ~/.iotnetemu
 
 - Create the IoTNetEMU Docker container:
 ```shell
-docker container create --name iotnetemu --network host --privileged -v /dev/pts/:/dev/pts/ -v ~/.iotnetemu:/iotnetemu/workspace -it harbor.nbfc.io/mlsysops/iotnetemu:1.0.1
+docker container create --name iotnetemu --network host --privileged -v /dev/pts/:/dev/pts/ -v ~/.iotnetemu:/iotnetemu/workspace -it ghcr.io/fraunhoferportugal/fita/components/iotnetemu
 ```
 
 - Start the container:
@@ -160,11 +160,9 @@ IoTNetEMU creates networks interfaces dynamically, which requires access to the 
 For more details regarding IoTNetEMU and its configurations, refer to [here](../advanced-usage/iotnetemu.md).
 
 <br/>
-<br/>
-<br/>
 
 Now that FITA and the Far-edge device emulator is setup, we can go to [Add Far-edge Device in Kubernetes Cluster](./nodes.md), which explains with an hands-on example how are Far-edge devices added and represented in the Kubernetes cluster. [Deploy Workload on Far-edge Devices](./workloads.md) continues the hands-on example for the deployment of Far-edge device workloads.
 
-Advanced usage, such as the implementation of custom Far-edge workloads and the integration of Far-edge workloads with workloads running on other nodes of the cluster is explained in [Create embServe Workload](../advanced-usage/create-workload.md) and [Interact with Far-edge Workload](../advanced-usage/interact-workload.md), respectively.
+Advanced usage, such as the implementation of custom Far-edge workloads and the integration of Far-edge workloads with workloads running on other nodes of the cluster is explained in [Create embServe Workload](../advanced-usage/create-workload.md), [Multi-platform images](../advanced-usage/multi-platform-images) and [Seamless interaction with workloads in Far-Edge and regular devices](../advanced-usage/workload-communication-adapter), respectively.
 
 You can further explore FITA using the examples provided in the [demo section](../../demos/index.md).
