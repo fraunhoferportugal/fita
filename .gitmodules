@@ -7,3 +7,6 @@
 [submodule "components/far-edge-node-watcher"]
 	path = components/far-edge-node-watcher
 	url = git@github.com:fraunhoferportugal/far-edge-node-watcher.git
+[submodule "demos/intelligent-traffic-control-demo/components/video_component/assets/models/darknet"]
+	path = demos/intelligent-traffic-control-demo/components/video_component/assets/models/darknet
+	url = https://github.com/pjreddie/darknet.git

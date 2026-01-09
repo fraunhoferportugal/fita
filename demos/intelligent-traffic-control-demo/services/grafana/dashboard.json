@@ -1,0 +1,480 @@
+{
+  "dashboard": {
+    "annotations": {
+      "list": [
+        {
+          "builtIn": 1,
+          "datasource": {
+            "type": "grafana",
+            "uid": "-- Grafana --"
+          },
+          "enable": true,
+          "hide": true,
+          "iconColor": "rgba(0, 211, 255, 1)",
+          "name": "Annotations & Alerts",
+          "type": "dashboard"
+        }
+      ]
+    },
+    "editable": true,
+    "fiscalYearStartMonth": 0,
+    "graphTooltip": 0,
+    "id": null,
+    "links": [],
+    "panels": [
+      {
+        "datasource": {
+          "type": "prometheus",
+          "uid": "ee4g2jl9km2v4d"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "custom": {
+              "align": "auto",
+              "cellOptions": {
+                "type": "auto"
+              },
+              "inspect": false
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            }
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 10,
+          "w": 5,
+          "x": 0,
+          "y": 0
+        },
+        "id": 12,
+        "options": {
+          "cellHeight": "sm",
+          "footer": {
+            "countRows": false,
+            "fields": "",
+            "reducer": [
+              "sum"
+            ],
+            "show": false
+          },
+          "showHeader": true
+        },
+        "pluginVersion": "11.3.0",
+        "targets": [
+          {
+            "editorMode": "code",
+            "exemplar": false,
+            "expr": "kube_node_info",
+            "format": "table",
+            "instant": true,
+            "legendFormat": "",
+            "range": false,
+            "refId": "A"
+          }
+        ],
+        "title": "",
+        "transformations": [
+          {
+            "id": "organize",
+            "options": {
+              "excludeByName": {
+                "Time": true,
+                "Value": true,
+                "__name__": true,
+                "container": true,
+                "container_runtime_version": true,
+                "endpoint": true,
+                "instance": true,
+                "internal_ip": true,
+                "job": true,
+                "kernel_version": true,
+                "kubelet_version": true,
+                "kubeproxy_version": true,
+                "namespace": true,
+                "os_image": true,
+                "pod": true,
+                "service": true,
+                "system_uuid": true
+              },
+              "includeByName": {},
+              "indexByName": {},
+              "renameByName": {
+                "node": "Nodes"
+              }
+            }
+          }
+        ],
+        "type": "table"
+      },
+      {
+        "fieldConfig": {
+          "defaults": {},
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 14,
+          "w": 12,
+          "x": 5,
+          "y": 0
+        },
+        "id": 18,
+        "options": {
+          "code": {
+            "language": "plaintext",
+            "showLineNumbers": false,
+            "showMiniMap": false
+          },
+ 					"content": "<p style=\"text-align: center\"> <iframe width=\"889\" height=\"500\" src=http://172.16.4.12:30100/stream.html?src=mystream> </iframe> </p>",
+          "mode": "markdown"
+        },
+        "pluginVersion": "11.3.0",
+        "title": "",
+        "type": "text"
+      },
+      {
+        "datasource": {
+          "type": "influxdb",
+          "uid": "be4g2gr4tkk5cb"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "axisBorderShow": false,
+              "axisCenteredZero": false,
+              "axisColorMode": "text",
+              "axisLabel": "dBFs",
+              "axisPlacement": "auto",
+              "barAlignment": 0,
+              "barWidthFactor": 0.6,
+              "drawStyle": "line",
+              "fillOpacity": 0,
+              "gradientMode": "none",
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              },
+              "insertNulls": false,
+              "lineInterpolation": "linear",
+              "lineWidth": 1,
+              "pointSize": 5,
+              "scaleDistribution": {
+                "type": "linear"
+              },
+              "showPoints": "auto",
+              "spanNulls": false,
+              "stacking": {
+                "group": "A",
+                "mode": "none"
+              },
+              "thresholdsStyle": {
+                "mode": "off"
+              }
+            },
+            "mappings": [],
+            "max": 0,
+            "min": -100,
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                }
+              ]
+            }
+          },
+          "overrides": [
+            {
+              "matcher": {
+                "id": "byFrameRefID",
+                "options": "Node1"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "Node 1"
+                }
+              ]
+            }
+          ]
+        },
+        "gridPos": {
+          "h": 14,
+          "w": 7,
+          "x": 17,
+          "y": 0
+        },
+        "id": 1,
+        "options": {
+          "legend": {
+            "calcs": [],
+            "displayMode": "table",
+            "placement": "right",
+            "showLegend": true
+          },
+          "tooltip": {
+            "mode": "single",
+            "sort": "none"
+          }
+        },
+        "pluginVersion": "11.3.0",
+        "targets": [
+          {
+            "datasource": {
+              "type": "influxdb",
+              "uid": "be4g2gr4tkk5cb"
+            },
+            "query": "from(bucket: \"default\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"noise\")\n  |> filter(fn: (r) => r[\"id\"] == \"${node1}\")",
+            "refId": "Node1"
+          }
+        ],
+        "title": "Noise",
+        "transformations": [
+          {
+            "id": "formatString",
+            "options": {}
+          }
+        ],
+        "type": "timeseries"
+      },
+      {
+        "datasource": {
+          "type": "prometheus",
+          "uid": "ee4g2jl9km2v4d"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "custom": {
+              "align": "auto",
+              "cellOptions": {
+                "type": "auto"
+              },
+              "inspect": false
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            }
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 11,
+          "w": 5,
+          "x": 0,
+          "y": 10
+        },
+        "id": 17,
+        "options": {
+          "cellHeight": "sm",
+          "footer": {
+            "countRows": false,
+            "fields": "",
+            "reducer": [
+              "sum"
+            ],
+            "show": false
+          },
+          "showHeader": true
+        },
+        "pluginVersion": "11.3.0",
+        "targets": [
+          {
+            "editorMode": "code",
+            "exemplar": false,
+            "expr": "kube_pod_info{pod=~\".*noise.*\"}",
+            "format": "table",
+            "instant": true,
+            "legendFormat": "",
+            "range": false,
+            "refId": "A"
+          }
+        ],
+        "title": "",
+        "transformations": [
+          {
+            "id": "organize",
+            "options": {
+              "excludeByName": {
+                "Time": true,
+                "Value": true,
+                "__name__": true,
+                "container": true,
+                "container_runtime_version": true,
+                "created_by_kind": true,
+                "created_by_name": true,
+                "endpoint": true,
+                "host_ip": true,
+                "host_network": true,
+                "instance": true,
+                "internal_ip": true,
+                "job": true,
+                "kernel_version": true,
+                "kubelet_version": true,
+                "kubeproxy_version": true,
+                "namespace": true,
+                "node": false,
+                "os_image": true,
+                "pod": false,
+                "pod_ip": true,
+                "priority_class": true,
+                "service": true,
+                "system_uuid": true,
+                "uid": true
+              },
+              "includeByName": {},
+              "indexByName": {
+                "Time": 2,
+                "Value": 17,
+                "__name__": 3,
+                "container": 4,
+                "created_by_kind": 5,
+                "created_by_name": 6,
+                "endpoint": 7,
+                "host_ip": 8,
+                "host_network": 9,
+                "instance": 10,
+                "job": 11,
+                "namespace": 12,
+                "node": 1,
+                "pod": 0,
+                "pod_ip": 13,
+                "priority_class": 16,
+                "service": 14,
+                "uid": 15
+              },
+              "renameByName": {
+                "node": "Node",
+                "pod": "Pod"
+              }
+            }
+          }
+        ],
+        "type": "table"
+      },
+      {
+        "fieldConfig": {
+          "defaults": {},
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 1,
+          "w": 24,
+          "x": 0,
+          "y": 21
+        },
+        "id": 9,
+        "options": {
+          "code": {
+            "language": "plaintext",
+            "showLineNumbers": false,
+            "showMiniMap": false
+          },
+          "content": "<p></p>",
+          "mode": "html"
+        },
+        "pluginVersion": "11.3.0",
+        "title": "",
+        "transparent": true,
+        "type": "text"
+      },
+      {
+        "fieldConfig": {
+          "defaults": {},
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 1,
+          "w": 24,
+          "x": 0,
+          "y": 22
+        },
+        "id": 11,
+        "options": {
+          "code": {
+            "language": "plaintext",
+            "showLineNumbers": false,
+            "showMiniMap": false
+          },
+          "content": "<p></p>",
+          "mode": "html"
+        },
+        "pluginVersion": "11.3.0",
+        "title": "",
+        "transparent": true,
+        "type": "text"
+      }
+    ],
+    "preload": false,
+    "refresh": "5s",
+    "schemaVersion": 40,
+    "tags": [],
+    "templating": {
+      "list": [
+        {
+          "current": {
+            "text": "b1_node1",
+            "value": "b1_node1"
+          },
+          "hide": 2,
+          "name": "node1",
+          "options": [
+            {
+              "selected": true,
+              "text": "b1_node1",
+              "value": "b1_node1"
+            }
+          ],
+          "query": "b1_node1",
+          "type": "custom"
+        }
+      ]
+    },
+    "time": {
+      "from": "now-15m",
+      "to": "now"
+    },
+    "timepicker": {},
+    "timezone": "",
+    "title": "FITA",
+    "uid": null,
+    "version": 2,
+    "weekStart": ""
+  },
+  "folderUid": "",
+  "inputs": [],
+  "overwrite": true
+}

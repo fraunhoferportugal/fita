@@ -1,0 +1,15 @@
+nodes:
+  node1:
+    type: 'zephyr'
+    image: 'image/embserve.elf'
+    bootstrap:
+      - 'embserve connector lwm2m server_add coap://10.10.12.254:5683 node1'
+    networks:
+      linux-br:
+        ipv4_address: 10.10.12.1
+        ipv4_gateway: 10.10.12.254
+ 
+networks:
+  linux-br:
+    type: 'linux-br'
+    host_address: 10.10.12.254
