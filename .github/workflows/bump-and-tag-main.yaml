@@ -108,7 +108,6 @@ jobs:
           MAJOR_VERSION=$(echo "${{ steps.tag.outputs.new-tag }}" | cut -d. -f1)
           echo "MAJOR_VERSION=$MAJOR_VERSION"
           VERSIONED_DIR="./versioned_docs/version-${MAJOR_VERSION}.x"
-          git checkout ${{ github.event.pull_request.head.ref }}
 
           if [ ! -d "$VERSIONED_DIR" ]; then
               echo "Versioned docs do not exist. Creating..."
