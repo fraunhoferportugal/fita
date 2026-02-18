@@ -4,11 +4,7 @@ sidebar_position: 1
 
 # Getting Started with FITA
 
-This section explains how to use FITA to add a Far-Edge device to the Kubernetes cluster and how to deploy workloads on them. Before detailing this procedures you need to install [FITA](#fita) and [IoTNetEMU](#iotnetemu).
-
-<!-- , the Far-edge device emulator we use in the remainder of this documentation.  -->
-
-<!-- You can use any Kubernetes distribution to run FITA. However, in the examples and demos used in this documentation, we used microK8S version XXXX. In section [Install and Configure microK8S](#microk8s), we explain how to install and configure microK8S. Similar procedures should be done for the Kubernetes distribution of your choice. -->
+This section explains how to use FITA to add a Far-Edge device to the Kubernetes cluster and how to deploy workloads on them. Before detailing these procedures you need to install [FITA](#fita) and [IoTNetEMU](#iotnetemu).
 
 ## Requirements
 
@@ -104,7 +100,7 @@ mkdir ~/.iotnetemu
 
 - Create the IoTNetEMU Docker container:
 ```shell
-docker container create --name iotnetemu --network host --privileged -v /dev/pts/:/dev/pts/ -v ~/.iotnetemu:/iotnetemu/workspace -it ghcr.io/fraunhoferportugal/fita/components/iotnetemu
+docker container create --name iotnetemu --entrypoint /bin/bash --network host --privileged -v /dev/pts/:/dev/pts/ -v ~/.iotnetemu:/iotnetemu/workspace -it ghcr.io/fraunhoferportugal/fita/components/iotnetemu
 ```
 
 - Start the container:
