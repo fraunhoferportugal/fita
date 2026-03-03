@@ -8,7 +8,7 @@ labels: ["feature-request", "needs-triage"]
 Provide a clear and concise description of the desired feature or enhancement.
 
 ## Motivation / Use Case
-Explain **why this feature is needed** and how it will improve the far-edge-kubelet components. Include specific scenarios or problems it solves.
+Explain **why this feature is needed** and how it will improve the fita components. Include specific scenarios or problems it solves.
 
 ## Proposed Solution (Optional)
 If you have ideas on how to implement this, describe them briefly.  
