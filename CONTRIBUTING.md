@@ -70,7 +70,7 @@ If new versions are available, the workflow opens or updates a PR using the `dev
 | `patch` | `patch` | A patch causes the version to be incremented by a patch |
 | `minor` | `patch` | The API and components remain the same. Only new backwards compatible features and improvements are introduced. |
 | `major` | `minor` | Indicates potentially breaking API changes in one or more FITA components. |
-| NA | `major` | New architectural components in the FITA framework maintainer decision. |
+| N/A | `major` | Addition of new architectural components in the FITA framework or maintainer decision. |
 
 To automate version bumps, used with the `release` bump type in the `Bump, tag and release main` workflow, `relsync` adds the `relsync/base-version` and `relsync/bump` annotations to the FITA Helm chart, in the `deploy/chart/Chart.yaml`, which it is kept updated according to the heuristic.
 
