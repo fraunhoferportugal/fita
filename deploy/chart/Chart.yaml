@@ -12,4 +12,7 @@ dependencies:
 - name: nextgengw
   version: 0.0.2
   repository: oci://ghcr.io/fraunhoferportugal/fita/charts
-appVersion: 0.0.5
+appVersion: 0.0.4
+annotations:
+  relsync/base-version: 0.0.3
+  relsync/bump: patch
