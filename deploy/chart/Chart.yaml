@@ -10,7 +10,7 @@ dependencies:
   version: 0.0.2
   repository: oci://ghcr.io/fraunhoferportugal/fita/charts
 - name: nextgengw
-  version: 0.1.2
+  version: 0.0.2
   repository: oci://ghcr.io/fraunhoferportugal/fita/charts
 appVersion: 0.0.4
 annotations:
