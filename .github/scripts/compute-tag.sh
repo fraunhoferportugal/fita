@@ -29,7 +29,6 @@ relsync_exit_code=0
 output=$(
   relsync bump "$app_bump" \
     --chart-bump-type "$app_bump" \
-    --create-tag \
     -o json
 ) || relsync_exit_code=$?
 
