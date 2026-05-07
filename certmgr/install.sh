@@ -6,3 +6,7 @@ microk8s kubectl apply -f https://github.com/cert-manager/cert-manager/releases/
 # otherwise, let's hope 10s is enough
 sleep 10s
 microk8s kubectl apply -f pki.yaml
+helm upgrade trust-manager oci://quay.io/jetstack/charts/trust-manager \
+  --install \
+  --namespace cert-manager \
+  --wait
