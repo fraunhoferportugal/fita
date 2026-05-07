@@ -1,0 +1,21 @@
+apiVersion: trust.cert-manager.io/v1alpha1
+kind: Bundle
+metadata:
+  name: fita-trust-bundle
+spec:
+  sources:
+    - secret:
+        namespace: fita
+        name: root-ca
+        key: ca.crt
+    - secret:
+        namespace: fita
+        name: intermediate-ca
+        key: ca.crt
+  target:
+    configMap:
+      key: ca.crt
+      name: trust-bundle-confmap
+    namespaceSelector:
+      matchLabels:
+        trust: enabled
