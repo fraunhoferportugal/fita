@@ -4,18 +4,15 @@ metadata:
   name: fita-trust-bundle
 spec:
   sources:
+    # secrets are kept in trust namespace
+    # only root CA should be in trust store, otherwise intermediate CA becomes
+    # de-facto root CA and cannot be seamlessly rotated
     - secret:
-        namespace: fita
         name: root-ca
-        key: ca.crt
-    - secret:
-        namespace: fita
-        name: intermediate-ca
         key: ca.crt
   target:
     configMap:
       key: ca.crt
-      name: trust-bundle-confmap
     namespaceSelector:
       matchLabels:
         trust: enabled

@@ -6,8 +6,11 @@ microk8s kubectl apply -f https://github.com/cert-manager/cert-manager/releases/
 # otherwise, let's hope 10s is enough
 sleep 10s
 microk8s kubectl apply -f ./conf/pki.yaml
-helm upgrade trust-manager oci://quay.io/jetstack/charts/trust-manager \
+microk8s kubectl apply -f ./conf/fenw.yaml
+microk8s kubectl label namespaces fita trust=enabled --overwrite=true
+microk8s helm upgrade trust-manager oci://quay.io/jetstack/charts/trust-manager \
   --install \
   --namespace cert-manager \
+  --set app.trust.namespace=fita \
   --wait
 microk8s kubectl apply -f ./conf/trustbundle.yaml
