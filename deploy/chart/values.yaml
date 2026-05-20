@@ -2,6 +2,10 @@ mqttBroker:
   enabled: true
   containerPort: 1883
   nodePort: 30010
+  tlsNodePort: 30011
+  tls: false
+  mTLS: false
+  allowUnsafeNoTLS: true
   image:
     repository: docker.io/eclipse-mosquitto
     pullPolicy: Always

@@ -20,8 +20,14 @@ spec:
           image: {{ .Values.mqttBroker.image.repository }}:{{ coalesce .Values.mqttBroker.image.tag "latest" }}
           imagePullPolicy: {{ .Values.mqttBroker.image.pullPolicy }}
           ports:
+            # arguably we could surround this in allowUnsafeNoTLS guards, but i don't think it will make a difference since
+            # it is only listening on localhost when the guard is off. it's nice to have the container report that *something* is listening on 1883
             - name: mqtt
               containerPort: {{ .Values.mqttBroker.containerPort }}
+            {{- if or (.Values.mqttBroker.tls) (.Values.mqttBroker.mTLS) }}
+            - name: mqtt-tls
+              containerPort: 8883
+            {{- end }}
           resources:
             requests:
               cpu: "250m"
@@ -34,14 +40,36 @@ spec:
               mountPath: /mosquitto/config/mosquitto.conf
               subPath: mosquitto.conf
               readOnly: true
+            {{- if or (.Values.mqttBroker.tls) (.Values.mqttBroker.mTLS) }}
+            - name: trust-bundle
+              mountPath: /etc/ssl/fita
+              readOnly: true
+            - name: mqtt-broker-tls
+              mountPath: /etc/ssl/broker
+              readOnly: true
+            {{- end }}
           livenessProbe:
-            tcpSocket:
-              port: {{ .Values.mqttBroker.containerPort }}
+            exec:
+              command:
+                - sh
+                - -c
+                - mosquitto_sub --host localhost --port 1883 --id 'liveness' --topic '$SYS/broker/version' -E -W 2 --qos 0
           readinessProbe:
-            tcpSocket:
-              port: {{ .Values.mqttBroker.containerPort }}
+            exec:
+              command:
+                - sh
+                - -c
+                - mosquitto_sub --host localhost --port 1883 --id 'readiness' --topic '$SYS/broker/version' -E -W 2 --qos 0
       volumes:
         - name: config
           configMap:
             name: mqtt-config
+        {{- if or (.Values.mqttBroker.tls) (.Values.mqttBroker.mTLS) }}
+        - name: trust-bundle
+          configMap:
+            name: fita-trust-bundle
+        - name: mqtt-broker-tls
+          secret:
+            secretName: mqtt-broker-server-secret
+        {{- end }}
 {{- end }}
