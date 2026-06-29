@@ -12,7 +12,7 @@ export default function Home() {
   return (
     <Layout
       title={siteConfig.title}
-      description="FITA - Flexible Intelligent Test Automation framework.">
+      description="FITA - Far-edge IoT device mAnagement.">
 
       {/* Hero */}
       <section className={clsx(styles.hero, 'hero')}>
