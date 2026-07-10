@@ -16,3 +16,4 @@ spec:
     namespaceSelector:
       matchLabels:
         trust: enabled
+

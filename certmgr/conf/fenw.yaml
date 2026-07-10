@@ -16,3 +16,4 @@ spec:
     name: intermediate-ca-issuer
   usages:
     - client auth
+
