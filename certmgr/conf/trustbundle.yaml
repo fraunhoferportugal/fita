@@ -1,0 +1,19 @@
+apiVersion: trust.cert-manager.io/v1alpha1
+kind: Bundle
+metadata:
+  name: fita-trust-bundle
+spec:
+  sources:
+    # secrets are kept in trust namespace
+    # only root CA should be in trust store, otherwise intermediate CA becomes
+    # de-facto root CA and cannot be seamlessly rotated
+    - secret:
+        name: root-ca
+        key: ca.crt
+  target:
+    configMap:
+      key: ca.crt
+    namespaceSelector:
+      matchLabels:
+        trust: enabled
+

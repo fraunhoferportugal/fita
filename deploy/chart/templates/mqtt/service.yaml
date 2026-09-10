@@ -7,9 +7,21 @@ spec:
   selector:
     app: {{ template "fita.fullname" . }}-mqtt-broker
   ports:
+  {{- if .Values.mqttBroker.tls }}
+    - protocol: TCP
+      port: 8883
+      nodePort: {{ .Values.mqttBroker.tlsNodePort }}
+      name: "mqtt-tls"
+  {{- end }}
+
+  # this is useful for compatibility with services not implementing TLS yet, like nextgengw
+  # is on by default
+  {{- if .Values.mqttBroker.allowUnsafeNoTLS }}
     - protocol: TCP
       port: {{ .Values.mqttBroker.containerPort }}
       nodePort: {{ .Values.mqttBroker.nodePort }}
       name: "mqtt"
+  {{- end }}
   type: NodePort
 {{- end }}
+

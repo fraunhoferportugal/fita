@@ -6,12 +6,34 @@ metadata:
 data:
   mosquitto.conf: |-
     log_dest stdout
-
+    # this will be a vulnerable sidechannel if exposed
+    # the only reason this is still valuable is because some services haven't implemented tls yet, such as nextgengw
+    # afterwards it should only be left on 127.0.0.1 for the liveness and readiness probes
+    {{- if .Values.mqttBroker.allowUnsafeNoTLS }}
     listener {{ .Values.mqttBroker.containerPort }} 0.0.0.0
+    {{- else }}
+    listener {{ .Values.mqttBroker.containerPort }} 127.0.0.1
+    {{- end }}
     protocol mqtt
 
     allow_anonymous true
     
     persistence true
     persistence_location /mosquitto/data/
+
+    {{- if .Values.mqttBroker.tls }}
+
+    listener 8883 0.0.0.0
+    protocol mqtt
+    allow_anonymous true
+    cafile /etc/ssl/fita/ca.crt
+    certfile /etc/ssl/broker/tls.crt
+    keyfile /etc/ssl/broker/tls.key
+
+    {{- if .Values.mqttBroker.mTLS }}
+    require_certificate true
+    {{- end }}
+
+    {{- end}}
 {{- end }}
+
