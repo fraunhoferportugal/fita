@@ -1,6 +1,13 @@
 #!/bin/bash
 set -euo pipefail
 
+# dirs
+ROOT_DIR="$(cd "$(dirname "$0")" && pwd)"
+FENW_CONF="$ROOT_DIR"/conf/fenw.yaml
+MQTTBROKER_CONF="$ROOT_DIR"/conf/mqttbroker.yaml
+PKI_CONF="$ROOT_DIR"/conf/pki.yaml
+TRUST_CONF="$ROOT_DIR"/conf/trustbundle.yaml
+
 detect_kubectl() {
 	# Environment variable
 	if [ -n "${KUBECTL_CMD:-}" ]; then
@@ -60,29 +67,32 @@ if ! HELM="$(detect_helm)"; then
 	exit 1
 fi
 
+# check for fita namespace
+fita=$("$KUBECTL" get namespace fita)
+
 # installs cert-manager in the cluster and configures PKI
-curl -LO https://cert-manager.io/public-keys/cert-manager-keyring-2021-09-20-1020CF3C033D4F35BAE1C19E1226061C665DF13E.gpg
+keyring=$(mktemp)
+curl -L https://cert-manager.io/public-keys/cert-manager-keyring-2021-09-20-1020CF3C033D4F35BAE1C19E1226061C665DF13E.gpg -o "$keyring"
 helm install \
   cert-manager oci://quay.io/jetstack/charts/cert-manager \
   --version v1.21.0 \
   --namespace cert-manager \
   --create-namespace \
   --verify \
-  --keyring ./cert-manager-keyring-2021-09-20-1020CF3C033D4F35BAE1C19E1226061C665DF13E.gpg \
+  --keyring "$keyring" \
   --set crds.enabled=true
 
-rm cert-manager-keyring-2021-09-20-1020CF3C033D4F35BAE1C19E1226061C665DF13E.gpg
 # if you have cmctl installed and configured this checks for the webhook in cert-manager to be ready
 # cmctl check api --wait=2m 
 # otherwise, let's hope 10s is enough
 sleep 10s
-"$KUBECTL" apply -f ./conf/pki.yaml
-"$KUBECTL" apply -f ./conf/fenw.yaml
-"$KUBECTL" apply -f ./conf/mqttbroker.yaml
+"$KUBECTL" apply -f "$PKI_CONF"
+"$KUBECTL" apply -f "$FENW_CONF"
+"$KUBECTL" apply -f "$MQTTBROKER_CONF"
 "$KUBECTL" label namespaces fita trust=enabled --overwrite=true
 "$HELM" upgrade trust-manager oci://quay.io/jetstack/charts/trust-manager \
   --install \
   --namespace cert-manager \
   --set app.trust.namespace=fita \
   --wait
-"$KUBECTL" apply -f ./conf/trustbundle.yaml
+"$KUBECTL" apply -f "$TRUST_CONF"
