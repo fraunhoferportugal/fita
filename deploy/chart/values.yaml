@@ -10,6 +10,8 @@ mqttBroker:
     repository: docker.io/eclipse-mosquitto
     pullPolicy: Always
     tag: '2'
+  trustBundle: fita-trust-bundle
+  tlsServerSecret: mqtt-broker-server-secret
 nextgengw:
   mqttBroker:
     host: mqtt-broker

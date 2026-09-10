@@ -31,19 +31,35 @@ if ! KUBECTL="$(detect_kubectl)"; then
 	exit 1
 fi
 
-echo "[1/5] Removing Certificates..."
-"$KUBECTL" delete certificates --all -A --ignore-not-found
+echo "[1/6] Removing Certificates..."
+"$KUBECTL" delete certificate trust-manager -n cert-manager --ignore-not-found
+"$KUBECTL" delete certificate fenw-mqtt-client-cert -n fita --ignore-not-found
+"$KUBECTL" delete certificate intermediate-ca -n fita --ignore-not-found
+"$KUBECTL" delete certificate mqtt-broker-server-cert -n fita --ignore-not-found
+"$KUBECTL" delete certificate root-ca -n fita --ignore-not-found
 
-echo "[2/5] Removing CertificateRequests..."
-"$KUBECTL" delete certificaterequests --all -A --ignore-not-found
+echo "[2/6] Removing CertificateRequests..."
+"$KUBECTL" delete certificaterequest fenw-mqtt-client-cert-1 -n fita --ignore-not-found
+"$KUBECTL" delete certificaterequest intermediate-ca-1 -n fita --ignore-not-found
+"$KUBECTL" delete certificaterequest mqtt-broker-server-cert-1 -n fita --ignore-not-found
+"$KUBECTL" delete certificaterequest root-ca-1 -n fita --ignore-not-found
 
-echo "[3/5] Removing Issuers..."
-"$KUBECTL" delete issuers --all -A --ignore-not-found
+echo "[3/6] Removing Issuers..."
+"$KUBECTL" delete issuer trust-manager -n cert-manager --ignore-not-found
+"$KUBECTL" delete issuer intermediate-ca-issuer -n fita --ignore-not-found
+"$KUBECTL" delete issuer root-ca-issuer -n fita --ignore-not-found
 
-echo "[4/5] Removing ClusterIssuers..."
-"$KUBECTL" delete clusterissuers --all --ignore-not-found
+echo "[4/6] Removing ClusterIssuers..."
+"$KUBECTL" delete clusterissuer bootstrap-selfsigned --ignore-not-found
 
-echo "[5/5] Removing trust-manager Bundles..."
-"$KUBECTL" delete bundles --all --ignore-not-found
+echo "[5/6] Removing trust-manager Bundles..."
+
+"$KUBECTL" delete bundle fita-trust-bundle --ignore-not-found
+
+echo "[6/6] Removing Secrets!..."
+"$KUBECTL" delete secret fenw-mqtt-client-secret -n fita --ignore-not-found
+"$KUBECTL" delete secret intermediate-ca -n fita --ignore-not-found
+"$KUBECTL" delete secret mqtt-broker-server-secret -n fita --ignore-not-found
+"$KUBECTL" delete secret root-ca -n fita --ignore-not-found
 
 echo "Cleanup complete. Proceed to uninstall."

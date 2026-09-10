@@ -67,10 +67,10 @@ spec:
         {{- if or (.Values.mqttBroker.tls) (.Values.mqttBroker.mTLS) }}
         - name: trust-bundle
           configMap:
-            name: fita-trust-bundle
+            name: {{ .Values.mqttBroker.trustBundle }}
         - name: mqtt-broker-tls
           secret:
-            secretName: mqtt-broker-server-secret
+            secretName: {{ .Values.mqttBroker.tlsServerSecret }}
         {{- end }}
 {{- end }}
 
